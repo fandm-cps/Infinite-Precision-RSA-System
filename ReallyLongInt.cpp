@@ -19,17 +19,12 @@ ReallyLongInt::ReallyLongInt(void){
 }
 
 ReallyLongInt::ReallyLongInt(long long num){
-    digits = new vector<bool>;
+    size = num != 0 ? int(log2( num < 0 ? -1 * num : num)) + 1 : 0;
+    digits = new vector<bool>(size, false);
     isNeg = (num < 0);
-    //size = int(log2(num));
-    size = 0;
-    while(num != 0){
-        if(num % 2 != 0)
-            digits->push_back(true);
-        else
-            digits->push_back(false);
+    for(int i = 0; num != 0; i++){
+        num % 2 != 0 ? (*digits)[i] = true : (*digits)[i] = false;
         num /= 2;
-        size ++;
     }
 }
 
@@ -38,15 +33,16 @@ ReallyLongInt::ReallyLongInt(const string &numStr){
 }
 
 ReallyLongInt::ReallyLongInt(const ReallyLongInt& other){
-    digits = other.digits;
+    digits = new vector<bool>(other.size, false);
+    for(int i = 0; i < other.size; i++)
+        (*digits)[i] = (*other.digits)[i];
     size = other.size;
     isNeg = other.isNeg;
 }
 
 ReallyLongInt::~ReallyLongInt(void)
 {
-    std::cout << "Destruct " << toString() << std::endl;
-    delete digits;
+    delete this->digits;
 }
 
 string ReallyLongInt::toString() const{
@@ -60,20 +56,27 @@ string ReallyLongInt::toString() const{
 
 string ReallyLongInt::toStringBinary() const{
     string str = "";
-    for(int i = 0; i < size; i++)
+    for(int i = size - 1; i >= 0; i--)
         (*digits)[i] == true ? str += "1" : str += "0";
     return str;
 }
 
+//return true if this and other have the same sign and the digits are the same
 bool ReallyLongInt::equal(const ReallyLongInt& other) const{
     return (other.isNeg == this->isNeg) and (*other.digits == *this->digits);
 }
 
 bool ReallyLongInt::absGreater(const ReallyLongInt &other)const{
-    for(int i = 0; i < this->size; i++)
+    if(this->size > other.size)
+        return true;
+    else if (this->size < other.size)
+        return false;
+    for(int i = this->size - 1; i >= 0 ; i--)
         if((*digits)[i] == false and (*other.digits)[i] == true)
             return false;
-    return true;
+        else if ((*digits)[i] == true and (*other.digits)[i] == false)
+            return true;
+    return false;
 }
 
 
