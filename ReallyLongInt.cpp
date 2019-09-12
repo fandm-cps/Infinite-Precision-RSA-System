@@ -80,3 +80,4 @@ bool ReallyLongInt::absGreater(const ReallyLongInt &other)const{
 bool ReallyLongInt::greater(const ReallyLongInt& other)const{
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
 }
+
