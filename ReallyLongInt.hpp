@@ -17,13 +17,14 @@ using namespace std;
 class ReallyLongInt{
     
 private:
-
-    
-
-public:
     vector<bool> *digits;
     unsigned int size;
     bool isNeg;
+    
+    bool absGreater(const ReallyLongInt& other)const;
+
+public:
+
     ReallyLongInt();
     ~ReallyLongInt();
     ReallyLongInt(long long num);
@@ -35,7 +36,7 @@ public:
     
     bool equal(const ReallyLongInt& other) const;
     bool greater(const ReallyLongInt& other) const;
-    bool absGreater(const ReallyLongInt& other)const;
+    
 };
 
 #endif
