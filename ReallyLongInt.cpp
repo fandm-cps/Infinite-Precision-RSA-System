@@ -1,16 +1,8 @@
-//
-//  ReallyLongInt.cpp
-//  project1
-//
-//  Created by 肖正义 on 9/10/19.
-//  Copyright © 2019 Zhengyi Xiao. All rights reserved.
-//
-
 #include "ReallyLongInt.hpp"
 #include <string>
 #include <vector>
 #include <iostream>
-#include <math.h>
+#include <math.h>  
 #include <cmath>
 
 ReallyLongInt::ReallyLongInt(void){
@@ -32,6 +24,7 @@ ReallyLongInt::ReallyLongInt(long long num){
         power *= 2;
     }
     num == 0 ? size = 1 : size = pow(2, ceil(log2(counter)));
+    size < 16 ? size = 16 : num;
     digits = new vector<bool>(size, false);
     for(int i = 0; i < size; i++){
         num % 2 != 0 ? (*digits)[i] = true : (*digits)[i] = false;
