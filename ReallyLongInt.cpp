@@ -122,3 +122,47 @@ bool ReallyLongInt::greater(const ReallyLongInt& other)const{
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
 }
 
+int main(){
+    cout << "==========new int a ==========" << endl;
+    long long first = 4;
+    ReallyLongInt a(first);
+    std::cout << "num            : "<< first << std::endl;
+    std::cout << "toStringBinary : "<< a.toStringBinary() << std::endl;
+    std::cout << "toString       : " << a.toString() << std::endl;
+    //std::cout << "size           : " << a.size << std::endl;
+
+    cout << "==========new int b ==========" << endl;
+    int second = -1234567;
+    ReallyLongInt b(second);
+    std::cout << "num            : "<< second << std::endl;
+    std::cout << "toStringBinary : "<< b.toStringBinary() << std::endl;
+    std::cout << "toString       : " << b.toString() << std::endl;
+    //std::cout << "size           : " << b.size << std::endl;
+    cout << "========== compare ==========" << endl;
+    std::cout << "equal test     : " << a.equal(b) << std::endl;
+    //std::cout << "absGreater test: "<<a.absGreater(b) << std::endl;
+    std::cout << "greater test   : "<< a.greater(b) << std::endl;
+    cout << "==========copy test==========" << endl;
+    cout << "==========new int c ==========" << endl;
+    ReallyLongInt c(b);
+    std::cout << "toStringBinary : "<< c.toStringBinary() << std::endl;
+    std::cout << "toString       : " << c.toString() << std::endl;
+    std::cout << "equal test     : " << c.equal(b) << std::endl;
+    std::cout << "equal test     : " << c.equal(a) << std::endl;
+
+    cout << "==========string test==========" << endl;
+    cout << "==========new int d ==========" << endl;
+    ReallyLongInt d("-1234567");
+    std::cout << "toStringBinary : "<< d.toStringBinary() << std::endl;
+    std::cout << "toString       : " << d.toString() << std::endl;
+    std::cout << "equal test     : " << d.equal(c) << std::endl;
+    std::cout << "equal test     : " << d.equal(b) << std::endl;
+
+    cout << "==========new int e ==========" << endl;
+    ReallyLongInt e("1234567");
+    std::cout << "toStringBinary : "<< e.toStringBinary() << std::endl;
+    std::cout << "toString       : " << e.toString() << std::endl;
+
+
+    return 0;
+}
