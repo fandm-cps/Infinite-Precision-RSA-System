@@ -31,7 +31,7 @@ ReallyLongInt::ReallyLongInt(long long num){
         }
         power *= 2;
     }
-    num == 0 ? size = 0 : size = pow(2, ceil(log2(counter)));
+    num == 0 ? size = 1 : size = pow(2, ceil(log2(counter)));
     digits = new vector<bool>(size, false);
     for(int i = 0; i < size; i++){
         num % 2 != 0 ? (*digits)[i] = true : (*digits)[i] = false;
@@ -62,7 +62,7 @@ ReallyLongInt::ReallyLongInt(const string &numStr){
         }
         power *= 2;
     }
-    num == 0 ? size = 0 : size = pow(2, ceil(log2(counter)));
+    num == 0 ? size = 1 : size = pow(2, ceil(log2(counter)));
     
     digits = new vector<bool>(size, false);
     for(int i = 0; i < size; i++){

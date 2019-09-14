@@ -20,7 +20,6 @@ private:
     vector<bool> *digits;
     unsigned int size;
     bool isNeg;
-    
     bool absGreater(const ReallyLongInt& other)const;
 
 public:

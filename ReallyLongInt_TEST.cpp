@@ -6,7 +6,6 @@
 //  Copyright © 2019 Zhengyi Xiao. All rights reserved.
 //
 
-#include "ReallyLongInt_TEST.hpp"
 #include "ReallyLongInt.hpp"
 #include <iostream>
 #include <vector>
@@ -17,7 +16,7 @@ using namespace std;
 
 int main(){
     cout << "==========new int a ==========" << endl;
-    long long first = 4;
+    long long first = 3;
     ReallyLongInt a(first);
     std::cout << "num            : "<< first << std::endl;
     std::cout << "toStringBinary : "<< a.toStringBinary() << std::endl;
@@ -25,7 +24,7 @@ int main(){
     //std::cout << "size           : " << a.size << std::endl;
     
     cout << "==========new int b ==========" << endl;
-    int second = -1234567;
+    int second = 0;
     ReallyLongInt b(second);
     std::cout << "num            : "<< second << std::endl;
     std::cout << "toStringBinary : "<< b.toStringBinary() << std::endl;
@@ -45,14 +44,14 @@ int main(){
     
     cout << "==========string test==========" << endl;
     cout << "==========new int d ==========" << endl;
-    ReallyLongInt d("-1234567");
+    ReallyLongInt d("0");
     std::cout << "toStringBinary : "<< d.toStringBinary() << std::endl;
     std::cout << "toString       : " << d.toString() << std::endl;
     std::cout << "equal test     : " << d.equal(c) << std::endl;
     std::cout << "equal test     : " << d.equal(b) << std::endl;
     
     cout << "==========new int e ==========" << endl;
-    ReallyLongInt e("1234567");
+    ReallyLongInt e("0");
     std::cout << "toStringBinary : "<< e.toStringBinary() << std::endl;
     std::cout << "toString       : " << e.toString() << std::endl;
 
