@@ -122,6 +122,13 @@ bool ReallyLongInt::greater(const ReallyLongInt& other)const{
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
 }
 
+#ifdef coverage
+#include "ReallyLongInt.hpp"
+#include <string>
+#include <vector>
+#include <iostream>
+#include <math.h>  
+#include <cmath>
 int main(){
     cout << "==========new int a ==========" << endl;
     long long first = 4;
@@ -166,3 +173,5 @@ int main(){
 
     return 0;
 }
+
+#endif
