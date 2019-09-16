@@ -1,20 +1,12 @@
 CC = g++
 CFLAGS = -Wall
-DEBUG = -DDEBUG -g  #-D means to define a macro name
+DEBUG = -DDEBUG -g 
 COVERAGE = --coverage 
 
 all: main 
 
-debug: ReallyLongInt.cpp
-	$(CC) $(CFLAGE) ReallyLongInt.cpp -o debug
-
 catchdebug: ReallyLongInt_TEST.cpp ReallyLongInt.o
-	$(CC) $(CFLAGS) $(CATCHINC) -o ReallyLongInt_TEST ReallyLongInt_TEST.cpp ReallyLongInt.o
+	$(CC) $(CFLAGE) $(CATCHINC) -DCATCH_CONFIG_MAIN ReallyLongInt_TEST.cpp ReallyLongInt.o -o ReallyLongInt_TEST
 
-coverage: ReallyLongInt.cpp
-	$(CC) $(CFLAGE) $(CATCHINC) $(COVERAGE) ReallyLongInt.cpp
-
-clean:
-	rm *.o;
-
-#gcov ReallyLongInt.cpp 
+coverage: ReallyLongInt_TEST.cpp ReallyLongInt.cpp
+	$(CC) $(CFLAGE) $(CATCHINC) $(COVERAGE) -DCATCH_CONFIG_MAIN ReallyLongInt_TEST.cpp ReallyLongInt.cpp -o ReallyLongInt_COVERAGE

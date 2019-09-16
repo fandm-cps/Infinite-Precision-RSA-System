@@ -5,7 +5,7 @@
 #include <math.h>  
 #include <cmath>
 
-#define DEBUG
+
 
 ReallyLongInt::ReallyLongInt(void){
     digits = new vector<bool>(16, false);
@@ -24,17 +24,18 @@ ReallyLongInt::ReallyLongInt(long long num){
 
     digits = new vector<bool>(size, false);
     for(int i = 0; i < size; i++){
-        num % 2 != 0 ? (*digits)[i] = true : (*digits)[i] = false;
+        num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
         num /= 2;
     }
 }
 
 ReallyLongInt::ReallyLongInt(const string &numStr){
-    int num = 0;
+    long long num = 0;
     if(numStr.substr(0,1) != "-"){
         isNeg = false;
-        for(int i = 0; i < numStr.length(); i++)
-            num += std::stoi(numStr.substr(i,1)) * pow(10, numStr.length() - 1 - i);
+        for(int i = 0; i < numStr.length(); i++){
+            num += ceil(std::stoi(numStr.substr(i,1)) * ceil(pow(10, numStr.length() - 1 - i)));
+        }
     }
     else{
         size --;
@@ -42,10 +43,8 @@ ReallyLongInt::ReallyLongInt(const string &numStr){
         for(int i = 1; i < numStr.length(); i++)
             num += std::stoi(numStr.substr(i,1)) * pow(10, numStr.length() - 1 - i);
     }
-    
-    long long power = 1;
     int counter = 0;
-    for(counter = 0; num >= power; counter++){
+    for(long long power = 1; num >= power; counter++){
         if(counter == 62){
             counter ++;
             break;
@@ -53,7 +52,6 @@ ReallyLongInt::ReallyLongInt(const string &numStr){
         power *= 2;
     }
     num == 0 ? size = 1 : size = pow(2, ceil(log2(counter)));
-    
     digits = new vector<bool>(size, false);
     for(int i = 0; i < size; i++){
         num % 2 != 0 ? (*digits)[i] = true : (*digits)[i] = false;
@@ -119,77 +117,24 @@ bool ReallyLongInt::greater(const ReallyLongInt& other)const{
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
 }
 
-#ifdef DEBUG 
+/*
 
-#include "ReallyLongInt.hpp"
-#include <string>
-#include <vector>
-#include <iostream>
-#include <math.h>  
-#include <cmath>
-int main(){
-    cout << "==========new int a ==========" << endl;
-    ReallyLongInt defalutTest();
-    long long first = 9223372036854775807;
-    ReallyLongInt a(first);
-    std::cout << "num            : "<< first << std::endl;
-    std::cout << "toStringBinary : "<< a.toStringBinary() << std::endl;
-    std::cout << "toString       : " << a.toString() << std::endl;
-    //std::cout << "size           : " << a.size << std::endl;
 
-    cout << "==========new int b ==========" << endl;
-    int second = -1234567;
-    ReallyLongInt b(second);
-    std::cout << "num            : "<< second << std::endl;
-    std::cout << "toStringBinary : "<< b.toStringBinary() << std::endl;
-    std::cout << "toString       : " << b.toString() << std::endl;
-    //std::cout << "size           : " << b.size << std::endl;
-    cout << "========== compare ==========" << endl;
-    std::cout << "equal test     : " << a.equal(b) << std::endl;
-    //std::cout << "absGreater test: "<<a.absGreater(b) << std::endl;
-    std::cout << "greater test   : "<< a.greater(b) << std::endl;
-    std::cout << "greater test   : "<< b.greater(a) << std::endl;
-    ReallyLongInt f(9223372036854775807);
-    std::cout << "greater test   : "<< a.greater(f) << std::endl;
-    std::cout << "greater test   : "<< f.greater(a) << std::endl;
-    cout << "==========copy test==========" << endl;
-    cout << "==========new int c ==========" << endl;
-    ReallyLongInt c(b);
-    std::cout << "toStringBinary : "<< c.toStringBinary() << std::endl;
-    std::cout << "toString       : " << c.toString() << std::endl;
-    std::cout << "equal test     : " << c.equal(b) << std::endl;
-    std::cout << "equal test     : " << c.equal(a) << std::endl;
+ReallyLongInt::ReallyLongInt(const string &numStr){
+    if((numStr.substr(i,1) == "1") or (numStr.substr(i,1) == "3") or (numStr.substr(i,1) == "5") or
+        (numStr.substr(i,1) == "7") or (numStr.substr(i,1) == "9"))
+    string numStr_2 = "";
+    int next_add = 0;
+    int current_add = 0;
+    for(int i = 0; i < numStr.length(); i++){
+        if((numStr.substr(i,1) == "1") or (numStr.substr(i,1) == "3") or (numStr.substr(i,1) == "5") or
+        (numStr.substr(i,1) == "7") or (numStr.substr(i,1) == "9"))
+            next_add = 5;
+        else
+            next_add = 0;
+        if((std::stoi(numStr.substr(i,1)) + current_add) != 0)
+            numStr_2 += to_string((std::stoi(numStr.substr(i,1)) + current_add));
+    }
 
-    cout << "==========string test==========" << endl;
-    cout << "==========new int d ==========" << endl;
-    ReallyLongInt d("-1234567");
-    std::cout << "toStringBinary : "<< d.toStringBinary() << std::endl;
-    std::cout << "toString       : " << d.toString() << std::endl;
-    std::cout << "equal test     : " << d.equal(c) << std::endl;
-    std::cout << "equal test     : " << d.equal(b) << std::endl;
-
-    cout << "==========new int e ==========" << endl;
-    ReallyLongInt e("9223372036854775807");
-    std::cout << "toStringBinary : "<< e.toStringBinary() << std::endl;
-    std::cout << "toString       : " << e.toString() << std::endl;
-
-    cout << "==========new int f ==========" << endl;
-    ReallyLongInt h("0");
-    std::cout << "toStringBinary : "<< h.toStringBinary() << std::endl;
-    std::cout << "toString       : " << h.toString() << std::endl;
-
-    cout << "==========new int g ==========" << endl;
-    ReallyLongInt g(0);
-    std::cout << "toStringBinary : "<< g.toStringBinary() << std::endl;
-    std::cout << "toString       : " << g.toString() << std::endl;
-
-    cout << "==========new int e ==========" << endl;
-    ReallyLongInt i("-9223372036854775807");
-    std::cout << "toStringBinary : "<< i.toStringBinary() << std::endl;
-    std::cout << "toString       : " << i.toString() << std::endl;
-    std::cout << "greater test   : "<< e.greater(g) << std::endl;
-    std::cout << "greater test   : "<< e.greater(f) << std::endl;
-    return 0;
 }
-
-#endif
+*/
