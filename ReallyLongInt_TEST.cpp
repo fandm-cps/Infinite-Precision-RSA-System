@@ -2,6 +2,8 @@
 #include "catch.hpp"
 #include "ReallyLongInt.hpp"
 
+
+#ifdef CATCH_CONFIG_MAIN
 TEST_CASE("TESTING ReallyLongInt Class"){
     ReallyLongInt* test_int_a;
     ReallyLongInt* test_int_b;
@@ -27,7 +29,7 @@ TEST_CASE("TESTING ReallyLongInt Class"){
 
         REQUIRE(test_int_a->toString() == "0");
 
-        REQUIRE(test_int_a->toStringBinary() == "0000000000000000");
+        REQUIRE(test_int_a->toStringBinary() == "0");
 
         test_int_a = new ReallyLongInt(9223372036854775807);
 
@@ -104,3 +106,5 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         delete test_int_b;
     }
 }
+
+#endif
