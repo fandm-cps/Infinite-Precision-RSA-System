@@ -1,4 +1,3 @@
-#define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "ReallyLongInt.hpp"
 
@@ -49,15 +48,21 @@ TEST_CASE("TESTING ReallyLongInt Class"){
     }
 
     SECTION("String Constructor"){
-        test_int_a = new ReallyLongInt("123456");
+        test_int_a = new ReallyLongInt("4611686018427387904");
 
-        INFO("Sets To Be String 123456")
+        INFO("Sets To Be String 4611686018427387904")
 
-        REQUIRE(test_int_a->toString() == "123456");
+        REQUIRE(test_int_a->toString() == "4611686018427387904");
 
-        REQUIRE(test_int_a->toStringBinary() == "00000000000000011110001001000000");
+        REQUIRE(test_int_a->toStringBinary() == "0100000000000000000000000000000000000000000000000000000000000000");
+
+        test_int_b = new ReallyLongInt("-4611686018427387904");
+
+
+        REQUIRE(test_int_b->toStringBinary() == "0100000000000000000000000000000000000000000000000000000000000000");
 
         delete test_int_a;
+        delete test_int_b;
     }
     
     SECTION("Equal Test"){
@@ -94,6 +99,16 @@ TEST_CASE("TESTING ReallyLongInt Class"){
 
     SECTION("Greater Test"){
         test_int_a = new ReallyLongInt(123);
+        test_int_b = new ReallyLongInt(-123);
+
+        INFO("a > b")
+        REQUIRE(test_int_a->greater(*test_int_b));
+        
+        INFO("a !> b")
+        REQUIRE_FALSE(test_int_b->greater(*test_int_a));
+
+
+        test_int_a = new ReallyLongInt(121);
         test_int_b = new ReallyLongInt(-123);
 
         INFO("a > b")
