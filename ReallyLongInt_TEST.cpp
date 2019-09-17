@@ -7,6 +7,7 @@ TEST_CASE("TESTING ReallyLongInt Class"){
     ReallyLongInt* test_int_a;
     ReallyLongInt* test_int_b;
     ReallyLongInt* test_int_c;
+    ReallyLongInt* test_int_d;
 
     SECTION("Default Constructor"){
         test_int_a = new ReallyLongInt();
@@ -108,17 +109,28 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         REQUIRE_FALSE(test_int_b->greater(*test_int_a));
 
 
-        test_int_a = new ReallyLongInt(121);
-        test_int_b = new ReallyLongInt(-123);
+        test_int_c = new ReallyLongInt("9999999");
+        test_int_d = new ReallyLongInt(123);
 
-        INFO("a > b")
-        REQUIRE(test_int_a->greater(*test_int_b));
+        INFO("c > d")
+        REQUIRE(test_int_c->greater(*test_int_d));
         
-        INFO("a !> b")
-        REQUIRE_FALSE(test_int_b->greater(*test_int_a));
+        INFO("d !> c")
+        REQUIRE_FALSE(test_int_d->greater(*test_int_c));
+
+        test_int_c = new ReallyLongInt(124);
+        test_int_d = new ReallyLongInt(123);
+
+        INFO("c > d")
+        REQUIRE(test_int_c->greater(*test_int_d));
+        
+        INFO("d !> c")
+        REQUIRE_FALSE(test_int_d->greater(*test_int_c));
 
         delete test_int_a;
         delete test_int_b;
+        delete test_int_c;
+        delete test_int_d;
     }
 }
 

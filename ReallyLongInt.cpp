@@ -30,31 +30,18 @@ ReallyLongInt::ReallyLongInt(long long num){
 }
 
 ReallyLongInt::ReallyLongInt(const string &numStr){
-    long long num = 0;
-    if(numStr.substr(0,1) != "-"){
-        isNeg = false;
-        for(int i = 0; i < numStr.length(); i++){
-            num += ceil(std::stoi(numStr.substr(i,1)) * ceil(pow(10, numStr.length() - 1 - i)));
-        }
-    }
-    else{
-        size --;
-        isNeg = true;
-        for(int i = 1; i < numStr.length(); i++)
-            num += std::stoi(numStr.substr(i,1)) * pow(10, numStr.length() - 1 - i);
-    }
+    long long num = stoll(numStr);
+    (isNeg = (num < 0)) ? num *= -1 : num;
     int counter = 0;
-    for(long long power = 1; num >= power; counter++){
-        if(counter == 62){
-            counter ++;
-            break;
-        }
+
+    for(long long power = 1; num >= power and counter != 62; counter++)
         power *= 2;
-    }
-    num == 0 ? size = 1 : size = pow(2, ceil(log2(counter)));
+
+    size = pow(2, ceil(log2((counter == 0 or counter == 62)? counter += 1 : counter)));
+
     digits = new vector<bool>(size, false);
     for(int i = 0; i < size; i++){
-        num % 2 != 0 ? (*digits)[i] = true : (*digits)[i] = false;
+        num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
         num /= 2;
     }
 }
@@ -117,24 +104,3 @@ bool ReallyLongInt::greater(const ReallyLongInt& other)const{
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
 }
 
-/*
-
-
-ReallyLongInt::ReallyLongInt(const string &numStr){
-    if((numStr.substr(i,1) == "1") or (numStr.substr(i,1) == "3") or (numStr.substr(i,1) == "5") or
-        (numStr.substr(i,1) == "7") or (numStr.substr(i,1) == "9"))
-    string numStr_2 = "";
-    int next_add = 0;
-    int current_add = 0;
-    for(int i = 0; i < numStr.length(); i++){
-        if((numStr.substr(i,1) == "1") or (numStr.substr(i,1) == "3") or (numStr.substr(i,1) == "5") or
-        (numStr.substr(i,1) == "7") or (numStr.substr(i,1) == "9"))
-            next_add = 5;
-        else
-            next_add = 0;
-        if((std::stoi(numStr.substr(i,1)) + current_add) != 0)
-            numStr_2 += to_string((std::stoi(numStr.substr(i,1)) + current_add));
-    }
-
-}
-*/
