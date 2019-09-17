@@ -75,8 +75,6 @@ string ReallyLongInt::toString() const{
 
 string ReallyLongInt::toStringBinary() const{
     string str = "";
-    if(size == 1)
-        return "0";
     for(int i = size - 1; i >= 0; i--)
         (*digits)[i] == true ? str += "1" : str += "0";
     return str;
