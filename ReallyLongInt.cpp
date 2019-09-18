@@ -102,56 +102,124 @@ bool ReallyLongInt::greater(const ReallyLongInt& other)const{
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
 }
 
-#ifdef coverage
-#include "ReallyLongInt.hpp"
-#include <string>
-#include <vector>
-#include <iostream>
-#include <math.h>  
-#include <cmath>
-int main(){
-    cout << "==========new int a ==========" << endl;
-    long long first = 4;
-    ReallyLongInt a(first);
-    std::cout << "num            : "<< first << std::endl;
-    std::cout << "toStringBinary : "<< a.toStringBinary() << std::endl;
-    std::cout << "toString       : " << a.toString() << std::endl;
-    //std::cout << "size           : " << a.size << std::endl;
-
-    cout << "==========new int b ==========" << endl;
-    int second = -1234567;
-    ReallyLongInt b(second);
-    std::cout << "num            : "<< second << std::endl;
-    std::cout << "toStringBinary : "<< b.toStringBinary() << std::endl;
-    std::cout << "toString       : " << b.toString() << std::endl;
-    //std::cout << "size           : " << b.size << std::endl;
-    cout << "========== compare ==========" << endl;
-    std::cout << "equal test     : " << a.equal(b) << std::endl;
-    //std::cout << "absGreater test: "<<a.absGreater(b) << std::endl;
-    std::cout << "greater test   : "<< a.greater(b) << std::endl;
-    cout << "==========copy test==========" << endl;
-    cout << "==========new int c ==========" << endl;
-    ReallyLongInt c(b);
-    std::cout << "toStringBinary : "<< c.toStringBinary() << std::endl;
-    std::cout << "toString       : " << c.toString() << std::endl;
-    std::cout << "equal test     : " << c.equal(b) << std::endl;
-    std::cout << "equal test     : " << c.equal(a) << std::endl;
-
-    cout << "==========string test==========" << endl;
-    cout << "==========new int d ==========" << endl;
-    ReallyLongInt d("-1234567");
-    std::cout << "toStringBinary : "<< d.toStringBinary() << std::endl;
-    std::cout << "toString       : " << d.toString() << std::endl;
-    std::cout << "equal test     : " << d.equal(c) << std::endl;
-    std::cout << "equal test     : " << d.equal(b) << std::endl;
-
-    cout << "==========new int e ==========" << endl;
-    ReallyLongInt e("1234567");
-    std::cout << "toStringBinary : "<< e.toStringBinary() << std::endl;
-    std::cout << "toString       : " << e.toString() << std::endl;
-
-
-    return 0;
+ReallyLongInt ReallyLongInt::absAdd(const ReallyLongInt& other) const{
+    ReallyLongInt* result = new ReallyLongInt();
+    int tmp_size = other.size < this->size ? this->size + 1 : other.size + 1;
+    vector<bool>* tmp_vector = new vector<bool>(tmp_size, false);
+    bool inc = false;
+    for(int i = 0; i < tmp_size; i++){
+        if(((*digits)[i] == 1 and (*other.digits)[i] == 1 and inc == 1) or
+           ((*digits)[i] == 1 and (*other.digits)[i] == 0 and inc == 0) or
+           ((*digits)[i] == 0 and (*other.digits)[i] == 1 and inc == 0) or
+           ((*digits)[i] == 0 and (*other.digits)[i] == 0 and inc == 1))
+            (*tmp_vector)[i] = 1;
+        else
+            (*tmp_vector)[i] = 0;
+        if(((*digits)[i] == 1 and (*other.digits)[i] == 1 and inc == 1) or
+           ((*digits)[i] == 1 and (*other.digits)[i] == 1 and inc == 0) or
+           ((*digits)[i] == 1 and (*other.digits)[i] == 0 and inc == 1) or
+           ((*digits)[i] == 0 and (*other.digits)[i] == 1 and inc == 1))
+            inc = 1;
+        else
+            inc = 0;
+    }
+    result->digits = tmp_vector;
+    result->size = tmp_size;
+    result->isNeg = false;
+    return *result;
 }
 
-#endif
+ReallyLongInt ReallyLongInt::add(const ReallyLongInt& other) const{
+    if(this->isNeg == 0 and other.isNeg == 0)
+        return this->absAdd(other);
+    else if(this->isNeg == 1 and other.isNeg == 1){
+        ReallyLongInt tmp = this->absAdd(other);
+        tmp.flipSign();
+        return tmp;
+    }
+    else if(this->isNeg == 0 and other.isNeg == 1)
+        return this->absSub(other);
+    else
+        return other.absSub(*this);
+}
+
+ReallyLongInt ReallyLongInt::absSub(const ReallyLongInt& other) const{
+    ReallyLongInt* result = new ReallyLongInt();
+    result->isNeg = false;
+    vector<bool> larger = *digits;
+    vector<bool> smaller = *other.digits;
+    if(not this->absGreater(other)){
+        smaller = *digits;
+        larger = *other.digits;
+        result->isNeg = true;
+    }
+    int tmp_size = other.size < this->size ? this->size: other.size;
+    vector<bool>* tmp_vector = new vector<bool>(tmp_size, false);
+    bool borrow = false;
+    for(int i = 0; i < tmp_size; i++){
+        if((smaller[i] == 1 and larger[i] == 1 and borrow == 1) or
+           (smaller[i] == 1 and larger[i] == 0 and borrow == 0) or
+           (smaller[i] == 0 and larger[i] == 1 and borrow == 0) or
+           (smaller[i] == 0 and larger[i] == 0 and borrow == 1))
+            (*tmp_vector)[i] = 1;
+        else
+            (*tmp_vector)[i] = 0;
+        if((smaller[i] == 1 and larger[i] == 1 and borrow == 1) or
+           (smaller[i] == 1 and larger[i] == 0 and borrow == 0) or
+           (smaller[i] == 0 and larger[i] == 0 and borrow == 1) or
+           (smaller[i] == 1 and larger[i] == 0 and borrow == 1))
+            borrow = 1;
+        else
+            borrow = 0;
+    }
+    result->digits = tmp_vector;
+    result->size = tmp_size;
+    return *result;
+}
+ReallyLongInt ReallyLongInt::sub(const ReallyLongInt& other) const{
+    if(this->isNeg == 0 and other.isNeg == 0)
+        return this->absSub(other);
+    else if(this->isNeg == 1 and other.isNeg == 1){
+        ReallyLongInt tmp = this->absSub(other);
+        tmp.flipSign();
+        return tmp;
+    }
+    else if(this->isNeg == 0 and other.isNeg == 1)
+        return this->absAdd(other);
+    else{
+        ReallyLongInt tmp = other.absAdd(*this);
+        tmp.flipSign();
+        return tmp;
+    }
+}
+
+void ReallyLongInt::flipSign(){
+    this->isNeg == 0 ? this->isNeg = 1 : this->isNeg = 0;
+}
+
+ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
+    ReallyLongInt* result = new ReallyLongInt();
+    vector<bool> result_digit(other.size * this->size, false);
+    for(int i = 0; i < other.size; i++){
+        vector<bool> tmp(other.size + i, false);
+        for(int j = 0; j < other.size + i; j++){
+            tmp[j + i] = ((*digits)[j] == 1 and (*other.digits)[i] == 1) ? 1 : 0;
+        }
+    }
+    return *result;
+}
+
+ReallyLongInt ReallyLongInt::operator-() const{
+    ReallyLongInt result;
+    result.digits = this->digits;
+    result.isNeg = this->isNeg == 0 ? 1 : 0;
+    result.size = this->size;
+    return result;
+}
+
+ReallyLongInt ReallyLongInt::operator=(const ReallyLongInt& x) const{
+    //this->digits = x.digits;
+    
+    return *this;
+}
+
