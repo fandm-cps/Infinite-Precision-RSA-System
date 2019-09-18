@@ -2,64 +2,46 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <math.h>  
+#include <math.h>
 #include <cmath>
 
+
+
 ReallyLongInt::ReallyLongInt(void){
-    digits = new vector<bool>(16, false);
-    size = 16;
+    digits = new vector<bool>(1, false);
+    size = 1;
     isNeg = false;
 }
 
 ReallyLongInt::ReallyLongInt(long long num){
-    isNeg = (num < 0);
-    isNeg ? num *= -1 : num;
-    long long power = 1;
+    (isNeg = (num < 0)) ? num *= -1 : num;
     int counter = 0;
-    for(counter = 0; num >= power; counter++){
-        if(counter == 62){
-            counter ++;
-            break;
-        }
+    
+    for(long long power = 1; num >= power and counter != 62; counter++)
         power *= 2;
-    }
-    num == 0 ? size = 1 : size = pow(2, ceil(log2(counter)));
-    size < 16 ? size = 16 : num;
+    
+    size = pow(2, ceil(log2((counter == 0 or counter == 62)? counter += 1 : counter)));
+    
     digits = new vector<bool>(size, false);
     for(int i = 0; i < size; i++){
-        num % 2 != 0 ? (*digits)[i] = true : (*digits)[i] = false;
+        num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
         num /= 2;
     }
 }
 
 ReallyLongInt::ReallyLongInt(const string &numStr){
-    int num = 0;
-    if(numStr.substr(0,1) != "-"){
-        isNeg = false;
-        for(int i = 0; i < numStr.length(); i++)
-            num += std::stoi(numStr.substr(i,1)) * pow(10, numStr.length() - 1 - i);
-    }
-    else{
-        size --;
-        isNeg = true;
-        for(int i = 1; i < numStr.length(); i++)
-            num += std::stoi(numStr.substr(i,1)) * pow(10, numStr.length() - 1 - i);
-    }
-    
-    long long power = 1;
+    long long num = stoll(numStr);
+    (isNeg = (num < 0)) ? num *= -1 : num;
     int counter = 0;
-    for(counter = 0; num >= power; counter++){
-        if(counter == 62){
-            counter ++;
-            break;
-        }
+    
+    for(long long power = 1; num >= power and counter != 62; counter++)
         power *= 2;
-    }
-    num == 0 ? size = 1 : size = pow(2, ceil(log2(counter)));
+    
+    size = pow(2, ceil(log2((counter == 0 or counter == 62)? counter += 1 : counter)));
     
     digits = new vector<bool>(size, false);
     for(int i = 0; i < size; i++){
-        num % 2 != 0 ? (*digits)[i] = true : (*digits)[i] = false;
+        num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
         num /= 2;
     }
 }
@@ -83,7 +65,7 @@ string ReallyLongInt::toString() const{
         if((*digits)[i] == true){
             long long power = 1;
             for(int j = 0; j < i; j ++)
-                    power *= 2;
+                power *= 2;
             ans += power;
         }
     }
@@ -93,8 +75,6 @@ string ReallyLongInt::toString() const{
 
 string ReallyLongInt::toStringBinary() const{
     string str = "";
-    if(size == 0)
-        return "0";
     for(int i = size - 1; i >= 0; i--)
         (*digits)[i] == true ? str += "1" : str += "0";
     return str;

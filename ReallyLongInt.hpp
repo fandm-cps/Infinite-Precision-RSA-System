@@ -1,10 +1,16 @@
+//
+//  ReallyLongInt.cpp
+//  project1
+//
+//  Created by 肖正义 on 9/10/19.
+//  Copyright © 2019 Zhengyi Xiao. All rights reserved.
+//
 #ifndef REALLYLONGINT_HPP
 #define REALLYLONGINT_HPP
 
 #include <stdio.h>
 #include <string.h>
 #include <vector>
-#include <string>
 
 using namespace std;
 
@@ -15,9 +21,14 @@ private:
     unsigned int size;
     bool isNeg;
     bool absGreater(const ReallyLongInt& other)const;
-
+    
+    ReallyLongInt absAdd(const ReallyLongInt& other) const;
+    ReallyLongInt absSub(const ReallyLongInt& other) const;
+    
+    void flipSign();
+    
 public:
-
+    
     ReallyLongInt();
     ~ReallyLongInt();
     ReallyLongInt(long long num);
@@ -30,9 +41,17 @@ public:
     bool equal(const ReallyLongInt& other) const;
     bool greater(const ReallyLongInt& other) const;
     
+    
+    ReallyLongInt add(const ReallyLongInt& other) const;
+    
+    ReallyLongInt sub(const ReallyLongInt& other) const;
+    
+    ReallyLongInt absMult(const ReallyLongInt& other) const;
+    
+    ReallyLongInt operator-() const;
+    
+    ReallyLongInt operator=(const ReallyLongInt& x) const;
 };
 
 #endif
-
-
 
