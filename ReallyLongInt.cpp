@@ -8,8 +8,8 @@
 
 
 ReallyLongInt::ReallyLongInt(void){
-    digits = new vector<bool>(16, false);
-    size = 16;
+    digits = new vector<bool>(1, false);
+    size = 1;
     isNeg = false;
 }
 

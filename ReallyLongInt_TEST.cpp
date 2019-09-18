@@ -16,7 +16,7 @@ TEST_CASE("TESTING ReallyLongInt Class"){
 
         REQUIRE(test_int_a->toString() == "0");
 
-        REQUIRE(test_int_a->toStringBinary() == "0000000000000000");
+        REQUIRE(test_int_a->toStringBinary() == "0");
 
         delete test_int_a;
     }
