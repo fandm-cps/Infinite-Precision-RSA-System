@@ -27,6 +27,7 @@ ReallyLongInt::ReallyLongInt(long long num){
         num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
         num /= 2;
     }
+    this->removeLeadingZeros();
 }
 
 ReallyLongInt::ReallyLongInt(const string &numStr){
@@ -44,6 +45,7 @@ ReallyLongInt::ReallyLongInt(const string &numStr){
         num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
         num /= 2;
     }
+    this->removeLeadingZeros();
 }
 
 ReallyLongInt::ReallyLongInt(const ReallyLongInt& other){
@@ -52,6 +54,7 @@ ReallyLongInt::ReallyLongInt(const ReallyLongInt& other){
         (*digits)[i] = (*other.digits)[i];
     size = other.size;
     isNeg = other.isNeg;
+    this->removeLeadingZeros();
 }
 
 ReallyLongInt::~ReallyLongInt(void)
@@ -80,7 +83,6 @@ string ReallyLongInt::toStringBinary() const{
     return str;
 }
 
-//return true if this and other have the same sign and the digits are the same
 bool ReallyLongInt::equal(const ReallyLongInt& other) const{
     return (other.isNeg == this->isNeg) and (*other.digits == *this->digits);
 }
@@ -100,6 +102,37 @@ bool ReallyLongInt::absGreater(const ReallyLongInt &other)const{
 
 bool ReallyLongInt::greater(const ReallyLongInt& other)const{
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
+}
+
+void ReallyLongInt::removeLeadingZeros(void){
+    while((*digits)[size - 1] == 0){
+        if(size == 1)
+            break;
+        size--;
+    }
+    vector<bool>* tmp = new vector<bool>(size, false);
+    for(int i = 0; i < size; i++)
+        (*tmp)[i] = (*digits)[i];
+    digits = tmp;
+}
+
+ReallyLongInt& ReallyLongInt::operator=(const ReallyLongInt& other){
+    swap(other);
+    return *this;
+}
+
+void ReallyLongInt::swap(ReallyLongInt other){
+    vector<bool>* tmp_v = this->digits;
+    this->digits = other.digits;
+    other.digits = tmp_v;
+    
+    bool tmp_b = this->isNeg;
+    this->isNeg = other.isNeg;
+    other.isNeg = tmp_b;
+    
+    int tmp_s = this->size;
+    this->size = other.size;
+    other.size = tmp_s;
 }
 
 ReallyLongInt ReallyLongInt::absAdd(const ReallyLongInt& other) const{
@@ -126,6 +159,7 @@ ReallyLongInt ReallyLongInt::absAdd(const ReallyLongInt& other) const{
     result->digits = tmp_vector;
     result->size = tmp_size;
     result->isNeg = false;
+    result->removeLeadingZeros();
     return *result;
 }
 
@@ -174,6 +208,7 @@ ReallyLongInt ReallyLongInt::absSub(const ReallyLongInt& other) const{
     }
     result->digits = tmp_vector;
     result->size = tmp_size;
+    result->removeLeadingZeros();
     return *result;
 }
 ReallyLongInt ReallyLongInt::sub(const ReallyLongInt& other) const{
@@ -197,6 +232,20 @@ void ReallyLongInt::flipSign(){
     this->isNeg == 0 ? this->isNeg = 1 : this->isNeg = 0;
 }
 
+ReallyLongInt ReallyLongInt::operator-() const{
+    ReallyLongInt tmp(*this);
+    tmp.flipSign();
+    return tmp;
+}
+
+ReallyLongInt operator+(const ReallyLongInt& x, const ReallyLongInt& y){
+    return x.add(y);
+}
+
+ReallyLongInt operator-(const ReallyLongInt& x, const ReallyLongInt& y){
+    return x.sub(y);
+}
+
 ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
     ReallyLongInt* result = new ReallyLongInt();
     vector<bool> result_digit(other.size * this->size, false);
@@ -207,19 +256,5 @@ ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
         }
     }
     return *result;
-}
-
-ReallyLongInt ReallyLongInt::operator-() const{
-    ReallyLongInt result;
-    result.digits = this->digits;
-    result.isNeg = this->isNeg == 0 ? 1 : 0;
-    result.size = this->size;
-    return result;
-}
-
-ReallyLongInt ReallyLongInt::operator=(const ReallyLongInt& x) const{
-    //this->digits = x.digits;
-    
-    return *this;
 }
 

@@ -1,10 +1,3 @@
-//
-//  ReallyLongInt.cpp
-//  project1
-//
-//  Created by 肖正义 on 9/10/19.
-//  Copyright © 2019 Zhengyi Xiao. All rights reserved.
-//
 #ifndef REALLYLONGINT_HPP
 #define REALLYLONGINT_HPP
 
@@ -41,6 +34,9 @@ public:
     bool equal(const ReallyLongInt& other) const;
     bool greater(const ReallyLongInt& other) const;
     
+    void removeLeadingZeros(void);
+    
+    void swap(ReallyLongInt other);
     
     ReallyLongInt add(const ReallyLongInt& other) const;
     
@@ -50,8 +46,13 @@ public:
     
     ReallyLongInt operator-() const;
     
-    ReallyLongInt operator=(const ReallyLongInt& x) const;
+    ReallyLongInt& operator=(const ReallyLongInt& other);
+    
 };
+
+ReallyLongInt operator+(const ReallyLongInt& x, const ReallyLongInt& y);
+
+ReallyLongInt operator-(const ReallyLongInt& x, const ReallyLongInt& y);
 
 #endif
 
