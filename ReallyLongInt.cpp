@@ -238,6 +238,54 @@ ReallyLongInt ReallyLongInt::operator-() const{
     return tmp;
 }
 
+ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
+    ReallyLongInt result;
+    for(int i = 0; i < other.size; i++){
+        vector<bool>* tmp = new vector<bool>(this->size + i, false);
+        for(int j = 0; j < this->size + i; j++){
+            (*tmp)[j + i] = ((*digits)[j] == 1 and (*other.digits)[i] == 1) ? 1 : 0;
+        }
+        ReallyLongInt int_tmp;
+        int_tmp.digits = tmp;
+        int_tmp.size = this->size + i;
+        int_tmp.isNeg = false;
+        result = result + int_tmp;
+    }
+    return result;
+}
+
+ReallyLongInt ReallyLongInt::mult(const ReallyLongInt& other) const{
+    if((this->isNeg == 1 and  other.isNeg == 1) or (this->isNeg == 0 and  other.isNeg == 0))
+        return this->absMult(other);
+    ReallyLongInt tmp = this->absMult(other);
+    tmp.flipSign();
+    return tmp;
+}
+
+void ReallyLongInt::absDiv(const ReallyLongInt& other, ReallyLongInt& quotient, ReallyLongInt& remainder) const{
+    remainder = 0;
+    long long d = 0;
+    ReallyLongInt other_copy(other);
+    other.isNeg == 1 ? other_copy.isNeg = 0 : other_copy.isNeg = 0;
+    for(int i = 0; i < this->size; i++){
+        remainder = remainder * 2;
+        int tmp = (*this->digits)[this->size - i - 1];
+        remainder = remainder + tmp;
+        d = 0;
+        while(remainder.greater(other_copy) or remainder.equal(other_copy)){
+            remainder = remainder.sub(other_copy);
+            d++;
+        }
+        quotient = quotient + (pow(2,this->size - i - 1) * d);
+    }
+}
+
+void ReallyLongInt::div(const ReallyLongInt& other, ReallyLongInt& quotient, ReallyLongInt& remainder) const{
+    this->absDiv(other, quotient, remainder);
+    if((this->isNeg == 1 and other.isNeg == 1) or (this->isNeg == 0 and other.isNeg == 1))
+        remainder.flipSign();
+}
+
 ReallyLongInt operator+(const ReallyLongInt& x, const ReallyLongInt& y){
     return x.add(y);
 }
@@ -246,15 +294,21 @@ ReallyLongInt operator-(const ReallyLongInt& x, const ReallyLongInt& y){
     return x.sub(y);
 }
 
-ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
-    ReallyLongInt* result = new ReallyLongInt();
-    vector<bool> result_digit(other.size * this->size, false);
-    for(int i = 0; i < other.size; i++){
-        vector<bool> tmp(other.size + i, false);
-        for(int j = 0; j < other.size + i; j++){
-            tmp[j + i] = ((*digits)[j] == 1 and (*other.digits)[i] == 1) ? 1 : 0;
-        }
-    }
-    return *result;
+ReallyLongInt operator*(const ReallyLongInt& x, const ReallyLongInt& y){
+    return x.mult(y);
 }
 
+
+ReallyLongInt operator/(const ReallyLongInt& x, const ReallyLongInt& y){
+    ReallyLongInt quotient;
+    ReallyLongInt remainder;
+    x.div(y, quotient, remainder);
+    return quotient;
+}
+
+ReallyLongInt operator%(const ReallyLongInt& x, const ReallyLongInt& y){
+    ReallyLongInt quotient;
+    ReallyLongInt remainder;
+    x.div(y, quotient, remainder);
+    return remainder;
+}
