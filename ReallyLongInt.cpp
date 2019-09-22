@@ -179,18 +179,16 @@ ReallyLongInt ReallyLongInt::add(const ReallyLongInt& other) const{
 
 ReallyLongInt ReallyLongInt::absSub(const ReallyLongInt& other) const{
     ReallyLongInt* result = new ReallyLongInt();
-    result->isNeg = false;
     vector<bool> larger = *digits;
     vector<bool> smaller = *other.digits;
     if(not this->absGreater(other)){
-        smaller = *digits;
-        larger = *other.digits;
+        std::swap(larger, smaller);
         result->isNeg = true;
     }
-    int tmp_size = other.size < this->size ? this->size: other.size;
-    vector<bool>* tmp_vector = new vector<bool>(tmp_size, false);
+    result->size = other.size < this->size ? this->size: other.size;
+    vector<bool>* tmp_vector = new vector<bool>(result->size, false);
     bool borrow = false;
-    for(int i = 0; i < tmp_size; i++){
+    for(int i = 0; i < result->size; i++){
         if((smaller[i] == 1 and larger[i] == 1 and borrow == 1) or
            (smaller[i] == 1 and larger[i] == 0 and borrow == 0) or
            (smaller[i] == 0 and larger[i] == 1 and borrow == 0) or
@@ -207,10 +205,10 @@ ReallyLongInt ReallyLongInt::absSub(const ReallyLongInt& other) const{
             borrow = 0;
     }
     result->digits = tmp_vector;
-    result->size = tmp_size;
     result->removeLeadingZeros();
     return *result;
 }
+
 ReallyLongInt ReallyLongInt::sub(const ReallyLongInt& other) const{
     if(this->isNeg == 0 and other.isNeg == 0)
         return this->absSub(other);
@@ -227,7 +225,6 @@ ReallyLongInt ReallyLongInt::sub(const ReallyLongInt& other) const{
         return tmp;
     }
 }
-
 void ReallyLongInt::flipSign(){
     this->isNeg == 0 ? this->isNeg = 1 : this->isNeg = 0;
 }
@@ -312,3 +309,4 @@ ReallyLongInt operator%(const ReallyLongInt& x, const ReallyLongInt& y){
     x.div(y, quotient, remainder);
     return remainder;
 }
+
