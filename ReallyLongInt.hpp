@@ -2,7 +2,7 @@
 #define REALLYLONGINT_HPP
 
 #include <stdio.h>
-#include <string.h>
+#include <string>
 #include <vector>
 
 using namespace std;
