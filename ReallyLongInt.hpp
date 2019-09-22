@@ -2,7 +2,7 @@
 #define REALLYLONGINT_HPP
 
 #include <stdio.h>
-#include <string.h>
+#include <string>
 #include <vector>
 
 using namespace std;
@@ -48,6 +48,12 @@ public:
     ReallyLongInt operator-() const;
     
     ReallyLongInt& operator=(const ReallyLongInt& other);
+    
+    ReallyLongInt exp(ReallyLongInt e) const;
+    
+    bool parity();
+    
+    bool isPrime();
 };
 
 ReallyLongInt operator+(const ReallyLongInt& x, const ReallyLongInt& y);

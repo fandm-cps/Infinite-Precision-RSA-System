@@ -286,6 +286,31 @@ void ReallyLongInt::div(const ReallyLongInt& other, ReallyLongInt& quotient, Rea
         remainder.flipSign();
 }
 
+ReallyLongInt ReallyLongInt::exp(ReallyLongInt e) const{
+    if(e.equal(0))
+        return 1;
+    if(e.parity() == 0)
+        return this->exp(e/2) * this->exp(e/2);
+    else
+        return *this * this->exp(e/2) * this->exp(e/2);
+}
+
+bool ReallyLongInt::parity(){
+    return (*this->digits)[0];
+}
+
+bool ReallyLongInt::isPrime(){
+    ReallyLongInt counter(2);
+    if(this->isNeg or (this->size == 1 and (*this->digits)[0] == 0))
+        return false;
+    while(this->greater(counter)){
+        if((*this % counter).toString() == "0")
+            return false;
+        counter = counter + 1;
+    }
+    return true;
+}
+
 ReallyLongInt operator+(const ReallyLongInt& x, const ReallyLongInt& y){
     return x.add(y);
 }
