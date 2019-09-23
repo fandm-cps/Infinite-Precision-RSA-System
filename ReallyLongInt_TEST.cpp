@@ -199,7 +199,7 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         c = a * b;
         REQUIRE(c.toString() == "-72");
     }
-    //neg is need to check
+
     SECTION("Division Test"){
         ReallyLongInt a(-5);
         ReallyLongInt b(-8);
@@ -215,15 +215,19 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         REQUIRE(r.toString() ==  std::to_string(3%(5)));
         REQUIRE(q.toString() ==  std::to_string(3/(5)));
 
-        a = ReallyLongInt(19);
+        a = ReallyLongInt(-19);
         b = ReallyLongInt(3);
         a.div(b, q, r);
-        REQUIRE(r.toString() == std::to_string(19%(3)));
-        REQUIRE(q.toString() == std::to_string(19/(3)));
+        REQUIRE(r.toString() == std::to_string(-19%(3)));
+        REQUIRE(q.toString() == std::to_string(-19/(3)));
+
+        a = ReallyLongInt(123);
+        b = ReallyLongInt(-2);
+        REQUIRE((a%b).toString() == std::to_string(123%(-2)));
+        REQUIRE((a/b).toString() == std::to_string(123/(-2)));
 
         a = ReallyLongInt(123);
         b = ReallyLongInt(2);
-
         REQUIRE((a%b).toString() == std::to_string(123%(2)));
         REQUIRE((a/b).toString() == std::to_string(123/(2)));
     }

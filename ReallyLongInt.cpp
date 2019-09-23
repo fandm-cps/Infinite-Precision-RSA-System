@@ -122,17 +122,9 @@ ReallyLongInt& ReallyLongInt::operator=(const ReallyLongInt& other){
 }
 
 void ReallyLongInt::swap(ReallyLongInt other){
-    vector<bool>* tmp_v = this->digits;
-    this->digits = other.digits;
-    other.digits = tmp_v;
-    
-    bool tmp_b = this->isNeg;
-    this->isNeg = other.isNeg;
-    other.isNeg = tmp_b;
-    
-    int tmp_s = this->size;
-    this->size = other.size;
-    other.size = tmp_s;
+    std::swap(this->digits, other.digits);
+    std::swap(this->isNeg, other.isNeg);
+    std::swap(this->size, other.size);
 }
 
 ReallyLongInt ReallyLongInt::absAdd(const ReallyLongInt& other) const{
@@ -160,6 +152,7 @@ ReallyLongInt ReallyLongInt::absAdd(const ReallyLongInt& other) const{
     result->size = tmp_size;
     result->isNeg = false;
     result->removeLeadingZeros();
+    delete tmp_vector;
     return *result;
 }
 
@@ -206,6 +199,7 @@ ReallyLongInt ReallyLongInt::absSub(const ReallyLongInt& other) const{
     }
     result->digits = tmp_vector;
     result->removeLeadingZeros();
+    delete tmp_vector;
     return *result;
 }
 
@@ -237,17 +231,22 @@ ReallyLongInt ReallyLongInt::operator-() const{
 
 ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
     ReallyLongInt result;
+    result.size = this->size * other.size;
     for(int i = 0; i < other.size; i++){
-        vector<bool>* tmp = new vector<bool>(this->size + i, false);
-        for(int j = 0; j < this->size + i; j++){
-            (*tmp)[j + i] = ((*digits)[j] == 1 and (*other.digits)[i] == 1) ? 1 : 0;
+        int car = 0;
+        for(int j = 0; j < this->size; j++){
+            int tmp = ((*digits)[j] == 1 and (*other.digits)[i] == 1) ? 1 : 0;
+            car =((tmp == 1 and car == 1 and (*result.digits)[j + i] == 1)
+                or(tmp == 1 and car == 0 and (*result.digits)[j + i] == 1)
+                or(tmp == 1 and car == 1 and (*result.digits)[j + i] == 0)
+                or(tmp == 0 and car == 1 and (*result.digits)[j + i] == 1)) ? 1 : 0;
+            (*result.digits)[j + i]  = ((tmp == 1 and car == 1 and (*result.digits)[j + i] == 1)
+                                     or (tmp == 1 and car == 0 and (*result.digits)[j + i] == 0)
+                                     or (tmp == 0 and car == 1 and (*result.digits)[j + i] == 0)
+                                     or (tmp == 0 and car == 0 and (*result.digits)[j + i] == 1)) ? 1 : 0;
         }
-        ReallyLongInt int_tmp;
-        int_tmp.digits = tmp;
-        int_tmp.size = this->size + i;
-        int_tmp.isNeg = false;
-        result = result + int_tmp;
     }
+    result.removeLeadingZeros();
     return result;
 }
 
@@ -275,11 +274,19 @@ void ReallyLongInt::absDiv(const ReallyLongInt& other, ReallyLongInt& quotient, 
         }
         quotient = quotient + (pow(2,this->size - i - 1) * d);
     }
+    quotient.removeLeadingZeros();
+    remainder.removeLeadingZeros();
 }
 
 void ReallyLongInt::div(const ReallyLongInt& other, ReallyLongInt& quotient, ReallyLongInt& remainder) const{
     this->absDiv(other, quotient, remainder);
-    if((this->isNeg == 1 and other.isNeg == 1) or (this->isNeg == 0 and other.isNeg == 1))
+    if(this->isNeg == 0 and other.isNeg == 1) 
+        quotient.flipSign();
+    else if(this->isNeg == 1 and other.isNeg == 0){
+        quotient.flipSign();
+        remainder.flipSign();
+    }
+    else if(this->isNeg == 1 and other.isNeg == 1)
         remainder.flipSign();
 }
 
