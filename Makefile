@@ -10,3 +10,6 @@ catchdebug: ReallyLongInt_TEST.cpp ReallyLongInt.o
 
 coverage: ReallyLongInt_TEST.cpp ReallyLongInt.cpp
 	$(CC) $(CFLAGE) $(CATCHINC) $(COVERAGE) -DCATCH_CONFIG_MAIN ReallyLongInt_TEST.cpp ReallyLongInt.cpp -o ReallyLongInt_COVERAGE
+
+extendedEuclid: numberTheory_TEST.cpp numberTheory.o
+	$(CC) $(CFLAGE) $(CATCHINC) -DCATCH_CONFIG_MAIN numberTheory_TEST.cpp numberTheory.o -o numberTheory_TEST
