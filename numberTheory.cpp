@@ -1,12 +1,11 @@
 #include "numberTheory.hpp"
 #include "ReallyLongInt.hpp"
-#include "ReallyLongInt.cpp"
+//#include "ReallyLongInt.cpp"
 #include <string>
 #include <vector>
 #include <iostream>
 #include <math.h>
 #include <cmath>
-#include <list>
 
 using namespace std;
 

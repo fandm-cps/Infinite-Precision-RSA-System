@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
-#include <list>
 
 struct arrReallyLongInt{ 
     ReallyLongInt arr[3]; 
