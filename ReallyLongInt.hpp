@@ -21,7 +21,7 @@ private:
     void absDiv(const ReallyLongInt& other, ReallyLongInt& quotient, ReallyLongInt& remainder) const;
     
     void flipSign();
-    
+    void swap(ReallyLongInt other);
 public:
     
     ReallyLongInt();
@@ -37,8 +37,6 @@ public:
     bool greater(const ReallyLongInt& other) const;
     
     void removeLeadingZeros(void);
-    
-    void swap(ReallyLongInt other);
     
     ReallyLongInt add(const ReallyLongInt& other) const;
     ReallyLongInt sub(const ReallyLongInt& other) const;

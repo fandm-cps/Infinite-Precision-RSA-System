@@ -198,6 +198,11 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         b = ReallyLongInt(8);
         c = a * b;
         REQUIRE(c.toString() == "-72");
+
+        a = ReallyLongInt(-9);
+        b = ReallyLongInt(-9);
+        c = a.mult(b);
+        REQUIRE(c.toString() == "81");
     }
 
     SECTION("Division Test"){

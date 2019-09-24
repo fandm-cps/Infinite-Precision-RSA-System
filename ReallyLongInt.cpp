@@ -232,20 +232,25 @@ ReallyLongInt ReallyLongInt::operator-() const{
 ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
     ReallyLongInt result;
     result.size = this->size * other.size;
+    result.digits = new vector<bool>(result.size, false);
+    int car = 0;
     for(int i = 0; i < other.size; i++){
-        int car = 0;
+        car = 0;
         for(int j = 0; j < this->size; j++){
             int tmp = ((*digits)[j] == 1 and (*other.digits)[i] == 1) ? 1 : 0;
-            car =((tmp == 1 and car == 1 and (*result.digits)[j + i] == 1)
-                or(tmp == 1 and car == 0 and (*result.digits)[j + i] == 1)
-                or(tmp == 1 and car == 1 and (*result.digits)[j + i] == 0)
-                or(tmp == 0 and car == 1 and (*result.digits)[j + i] == 1)) ? 1 : 0;
-            (*result.digits)[j + i]  = ((tmp == 1 and car == 1 and (*result.digits)[j + i] == 1)
-                                     or (tmp == 1 and car == 0 and (*result.digits)[j + i] == 0)
-                                     or (tmp == 0 and car == 1 and (*result.digits)[j + i] == 0)
-                                     or (tmp == 0 and car == 0 and (*result.digits)[j + i] == 1)) ? 1 : 0;
+            int last_result = (*result.digits)[j + i];
+            (*result.digits)[j + i]  = ((tmp == 1 and car == 1 and last_result == 1)
+                                        or (tmp == 1 and car == 0 and last_result == 0)
+                                        or (tmp == 0 and car == 1 and last_result == 0)
+                                        or (tmp == 0 and car == 0 and last_result == 1)) ? 1 : 0;
+            car =((tmp == 1 and car == 1 and last_result == 1)
+                  or(tmp == 1 and car == 0 and last_result == 1)
+                  or(tmp == 1 and car == 1 and last_result == 0)
+                  or(tmp == 0 and car == 1 and last_result == 1)) ? 1 : 0;
         }
     }
+    if(not (car == 0))
+        (*result.digits)[other.size + 1] = 1;
     result.removeLeadingZeros();
     return result;
 }
