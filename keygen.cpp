@@ -13,8 +13,7 @@
 
 using namespace std;
 
-int main(int argc, char** argv) 
-{
+int main(int argc, char** argv){
 
     ReallyLongInt p(argv[1]);
     ReallyLongInt q(argv[2]);
