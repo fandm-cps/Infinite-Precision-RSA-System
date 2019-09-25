@@ -5,6 +5,8 @@
 #include <math.h>
 #include <cmath>
 
+
+
 ReallyLongInt::ReallyLongInt(void){
     digits = new vector<bool>(1, false);
     size = 1;
@@ -14,12 +16,12 @@ ReallyLongInt::ReallyLongInt(void){
 ReallyLongInt::ReallyLongInt(long long num){
     (isNeg = (num < 0)) ? num *= -1 : num;
     int counter = 0;
-    
+
     for(long long power = 1; num >= power and counter != 62; counter++)
         power *= 2;
     
     size = pow(2, ceil(log2((counter == 0 or counter == 62)? counter += 1 : counter)));
-    
+
     digits = new vector<bool>(size, false);
     for(int i = 0; i < size; i++){
         num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
@@ -32,12 +34,12 @@ ReallyLongInt::ReallyLongInt(const string &numStr){
     long long num = stoll(numStr);
     (isNeg = (num < 0)) ? num *= -1 : num;
     int counter = 0;
-    
+
     for(long long power = 1; num >= power and counter != 62; counter++)
         power *= 2;
     
     size = pow(2, ceil(log2((counter == 0 or counter == 62)? counter += 1 : counter)));
-    
+
     digits = new vector<bool>(size, false);
     for(int i = 0; i < size; i++){
         num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
@@ -103,6 +105,7 @@ bool ReallyLongInt::greater(const ReallyLongInt& other)const{
         return false;
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
 }
+
 
 void ReallyLongInt::removeLeadingZeros(void){
     while((*digits)[size - 1] == 0){
@@ -352,3 +355,4 @@ ReallyLongInt operator%(const ReallyLongInt& x, const ReallyLongInt& y){
     x.div(y, quotient, remainder);
     return remainder;
 }
+

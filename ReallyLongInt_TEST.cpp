@@ -8,16 +8,16 @@ TEST_CASE("TESTING ReallyLongInt Class"){
     ReallyLongInt* test_int_b;
     ReallyLongInt* test_int_c;
     ReallyLongInt* test_int_d;
-    
+
     SECTION("Default Constructor"){
         test_int_a = new ReallyLongInt();
         
         INFO("Using default constructor")
         
         REQUIRE(test_int_a->toString() == "0");
-        
+      
         REQUIRE(test_int_a->toStringBinary() == "0");
-        
+
         delete test_int_a;
     }
     
@@ -27,6 +27,7 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         
         INFO("Sets To Be 0")
         REQUIRE(test_int_a->toString() == "0");
+
         REQUIRE(test_int_a->toStringBinary() == "0");
         
         test_int_a = new ReallyLongInt(9223372036854775807);
@@ -48,6 +49,7 @@ TEST_CASE("TESTING ReallyLongInt Class"){
     
     SECTION("String Constructor"){
         test_int_a = new ReallyLongInt("4611686018427387904");
+
         
         INFO("Sets To Be String 4611686018427387904")
         
@@ -105,20 +107,21 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         
         INFO("a !> b")
         REQUIRE_FALSE(test_int_b->greater(*test_int_a));
-        
+  
         
         test_int_c = new ReallyLongInt("9999999");
         test_int_d = new ReallyLongInt(123);
-        
+ 
         INFO("c > d")
         REQUIRE(test_int_c->greater(*test_int_d));
         
         INFO("d !> c")
         REQUIRE_FALSE(test_int_d->greater(*test_int_c));
-        
+      
         test_int_c = new ReallyLongInt(124);
         test_int_d = new ReallyLongInt(123);
         
+
         INFO("c > d")
         REQUIRE(test_int_c->greater(*test_int_d));
         
@@ -130,7 +133,7 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         
         INFO("a > b")
         REQUIRE_FALSE(test_int_a->greater(*test_int_b));
-        
+
         delete test_int_a;
         delete test_int_b;
         delete test_int_c;
@@ -265,3 +268,4 @@ TEST_CASE("TESTING ReallyLongInt Class"){
 }
 
 #endif
+

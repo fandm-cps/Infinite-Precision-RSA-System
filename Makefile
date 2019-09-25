@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -Wall
-DEBUG = -DDEBUG -g  #-D means to define a macro name
+DEBUG = -DDEBUG -g 
 COVERAGE = --coverage 
 
 all: catchdebug 
