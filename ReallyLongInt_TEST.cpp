@@ -125,6 +125,12 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         INFO("d !> c")
         REQUIRE_FALSE(test_int_d->greater(*test_int_c));
 
+        test_int_a = new ReallyLongInt(-123);
+        test_int_b = new ReallyLongInt(-123);
+
+        INFO("a > b")
+        REQUIRE_FALSE(test_int_a->greater(*test_int_b));
+
         delete test_int_a;
         delete test_int_b;
         delete test_int_c;

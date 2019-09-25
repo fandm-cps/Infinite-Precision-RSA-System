@@ -13,24 +13,24 @@
 using namespace std;
 
 int main(int argc, char** argv){
-    ifstream publicKey(argv[1]);
+    ifstream privateKey(argv[1]);
     char c;
 
-    ReallyLongInt e;
+    ReallyLongInt d;
     ReallyLongInt n;
-    if(publicKey.is_open()){
+    if(privateKey.is_open()){
         string tmp = "";
-        while (publicKey.get(c) and c != ' ')
+        while (privateKey.get(c) and c != ' ')
             tmp += c;
-        e = ReallyLongInt(tmp);
+        d = ReallyLongInt(tmp);
 
         tmp = "";
-        while (publicKey.get(c) and c != ' ')
+        while (privateKey.get(c) and c != ' ')
             tmp += c;
         n = ReallyLongInt(tmp);
     }
     else{
-        cout << "the public key file is wrong!";
+        cout << "the private key file is wrong!";
         return 1;
     }
 
@@ -39,14 +39,15 @@ int main(int argc, char** argv){
     outputFile.open(argv[3]);
     if(inputFile.is_open()){
         while (inputFile.get(c)){
-            int ASCI = int(c);
+            int ASCI = c;
             ReallyLongInt x(ASCI);
-            ReallyLongInt y = x.exp(e) % n;
-            outputFile << (y.toString()) << " ";
+            ReallyLongInt y = x.exp(d) % n;
+            int result = stoi(y.toString()); 
+            outputFile << char(result) << " ";
         }
     }
     else{
-        cout << "the public key file is wrong!";
+        cout << "the private key file is wrong!";
         return 1;
     }
     inputFile.close();

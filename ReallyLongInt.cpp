@@ -101,6 +101,8 @@ bool ReallyLongInt::absGreater(const ReallyLongInt &other)const{
 }
 
 bool ReallyLongInt::greater(const ReallyLongInt& other)const{
+    if(not absGreater(other) and other.isNeg and this->isNeg)
+        return false;
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
 }
 
@@ -355,3 +357,8 @@ ReallyLongInt operator%(const ReallyLongInt& x, const ReallyLongInt& y){
     return remainder;
 }
 
+
+int main(){
+    ReallyLongInt a(-100000);
+    std::cout << a.toStringBinary() << std::endl;
+}
