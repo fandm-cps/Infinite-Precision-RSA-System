@@ -34,20 +34,14 @@ int main(int argc, char** argv){
         return 1;
     }
 
-    fstream inputFile(argv[2]);
-    ofstream outputFile;
-    outputFile.open(argv[3]);
-    if(inputFile.is_open()){
-        while (inputFile.get(c)){
-            int ASCI = int(c);
-            ReallyLongInt x(ASCI);
-            ReallyLongInt y = x.exp(e) % n;
-            outputFile << (y.toString()) << " ";
-        }
-    }
-    else{
-        cout << "the public key file is wrong!";
-        return 1;
+    ifstream inputFile(argv[2]);
+    ofstream outputFile(argv[3]);
+    while (inputFile.get(c)){
+        unsigned long long tmp = (unsigned long long)c;
+        ReallyLongInt x(tmp);
+        ReallyLongInt y = (x.exp(e)) % n;
+        cout << c<< " "<< x.toString() << " " << e.toString() << " " << n.toString() << " " << y.toString() <<endl;
+        outputFile << (y.toString()) << " ";
     }
     inputFile.close();
     outputFile.close();

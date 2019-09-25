@@ -238,7 +238,7 @@ ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
     int car = 0;
     for(int i = 0; i < other.size; i++){
         car = 0;
-        for(int j = 0; j < this->size; j++){
+        for(int j = 0; j < this->size + 1; j++){
             int tmp = ((*digits)[j] == 1 and (*other.digits)[i] == 1) ? 1 : 0;
             int last_result = (*result.digits)[j + i];
             (*result.digits)[j + i]  = ((tmp == 1 and car == 1 and last_result == 1)
@@ -251,8 +251,6 @@ ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
                   or(tmp == 0 and car == 1 and last_result == 1)) ? 1 : 0;
         }
     }
-    if(not (car == 0))
-        (*result.digits)[other.size + 1] = 1;
     result.removeLeadingZeros();
     return result;
 }
@@ -357,8 +355,3 @@ ReallyLongInt operator%(const ReallyLongInt& x, const ReallyLongInt& y){
     return remainder;
 }
 
-
-int main(){
-    ReallyLongInt a(-100000);
-    std::cout << a.toStringBinary() << std::endl;
-}

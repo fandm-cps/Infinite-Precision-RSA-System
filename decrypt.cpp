@@ -34,21 +34,18 @@ int main(int argc, char** argv){
         return 1;
     }
 
-    fstream inputFile(argv[2]);
-    ofstream outputFile;
-    outputFile.open(argv[3]);
-    if(inputFile.is_open()){
-        while (inputFile.get(c)){
-            int ASCI = c;
-            ReallyLongInt x(ASCI);
-            ReallyLongInt y = x.exp(d) % n;
-            int result = stoi(y.toString()); 
-            outputFile << char(result) << " ";
-        }
-    }
-    else{
-        cout << "the private key file is wrong!";
-        return 1;
+    ifstream inputFile(argv[2]);
+    ofstream outputFile(argv[3]);
+    ReallyLongInt y;
+    string tmp;
+    inputFile >> tmp;
+    y = tmp;
+    while(!inputFile.eof()){
+        long long tmp_x = stoll((y.exp(d) % n).toString());
+        char x = (char)tmp_x;
+        outputFile << x;
+        inputFile>> tmp;
+        y = tmp;
     }
     inputFile.close();
     outputFile.close();

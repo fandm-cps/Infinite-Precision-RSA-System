@@ -247,10 +247,12 @@ TEST_CASE("TESTING ReallyLongInt Class"){
     SECTION("exp Test"){
         ReallyLongInt a(3);
         ReallyLongInt b(5);
-        
+
         REQUIRE(((a.exp(b)).toString()) == "243");
         REQUIRE(((a.exp(0)).toString()) == "1");  
 
+        a = ReallyLongInt(90);
+        b = ReallyLongInt(4);
     }
     SECTION("Prime Test"){
         ReallyLongInt a(5);
