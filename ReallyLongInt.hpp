@@ -21,7 +21,10 @@ private:
     void absDiv(const ReallyLongInt& other, ReallyLongInt& quotient, ReallyLongInt& remainder) const;
     
     void flipSign();
+    ReallyLongInt expHelper(ReallyLongInt base, ReallyLongInt exp);
+    bool parity();
     void swap(ReallyLongInt other);
+    
 public:
     
     ReallyLongInt();
@@ -46,6 +49,10 @@ public:
     ReallyLongInt operator-() const;
     
     ReallyLongInt& operator=(const ReallyLongInt& other);
+    
+    ReallyLongInt exp(const ReallyLongInt e);
+    
+    bool isPrime();
 };
 
 ReallyLongInt operator+(const ReallyLongInt& x, const ReallyLongInt& y);
@@ -59,4 +66,3 @@ ReallyLongInt operator/(const ReallyLongInt& x, const ReallyLongInt& y);
 ReallyLongInt operator%(const ReallyLongInt& x, const ReallyLongInt& y);
 
 #endif
-

@@ -5,8 +5,6 @@
 #include <math.h>
 #include <cmath>
 
-
-
 ReallyLongInt::ReallyLongInt(void){
     digits = new vector<bool>(1, false);
     size = 1;
@@ -101,6 +99,8 @@ bool ReallyLongInt::absGreater(const ReallyLongInt &other)const{
 }
 
 bool ReallyLongInt::greater(const ReallyLongInt& other)const{
+    if(not absGreater(other) and other.isNeg and this->isNeg)
+        return false;
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
 }
 
@@ -236,7 +236,7 @@ ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
     int car = 0;
     for(int i = 0; i < other.size; i++){
         car = 0;
-        for(int j = 0; j < this->size; j++){
+        for(int j = 0; j < this->size + 1; j++){
             int tmp = ((*digits)[j] == 1 and (*other.digits)[i] == 1) ? 1 : 0;
             int last_result = (*result.digits)[j + i];
             (*result.digits)[j + i]  = ((tmp == 1 and car == 1 and last_result == 1)
@@ -249,8 +249,6 @@ ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
                   or(tmp == 0 and car == 1 and last_result == 1)) ? 1 : 0;
         }
     }
-    if(not (car == 0))
-        (*result.digits)[other.size + 1] = 1;
     result.removeLeadingZeros();
     return result;
 }
@@ -285,7 +283,7 @@ void ReallyLongInt::absDiv(const ReallyLongInt& other, ReallyLongInt& quotient, 
 
 void ReallyLongInt::div(const ReallyLongInt& other, ReallyLongInt& quotient, ReallyLongInt& remainder) const{
     this->absDiv(other, quotient, remainder);
-    if(this->isNeg == 0 and other.isNeg == 1) 
+    if(this->isNeg == 0 and other.isNeg == 1)
         quotient.flipSign();
     else if(this->isNeg == 1 and other.isNeg == 0){
         quotient.flipSign();
@@ -293,6 +291,40 @@ void ReallyLongInt::div(const ReallyLongInt& other, ReallyLongInt& quotient, Rea
     }
     else if(this->isNeg == 1 and other.isNeg == 1)
         remainder.flipSign();
+}
+
+ReallyLongInt ReallyLongInt::exp(const ReallyLongInt e){
+    ReallyLongInt base(*this);
+    ReallyLongInt exp = e;
+    return expHelper(base, e);
+}
+
+ReallyLongInt ReallyLongInt::expHelper(ReallyLongInt base, ReallyLongInt exp){
+    if(exp.toString() == "0")
+        return 1;
+    if(exp.toString() == "1")
+        return base;
+    else if(exp.parity() == 0)
+        return expHelper(base * base, exp/2);
+    else
+        return base * expHelper(base, exp-1);
+}
+
+
+bool ReallyLongInt::parity(){
+    return (*this->digits)[0];
+}
+
+bool ReallyLongInt::isPrime(){
+    ReallyLongInt counter(2);
+    if(this->isNeg or (this->size == 1 and (*this->digits)[0] == 0))
+        return false;
+    while(this->greater(counter)){
+        if((*this % counter).toString() == "0")
+            return false;
+        counter = counter + 1;
+    }
+    return true;
 }
 
 ReallyLongInt operator+(const ReallyLongInt& x, const ReallyLongInt& y){
@@ -307,7 +339,6 @@ ReallyLongInt operator*(const ReallyLongInt& x, const ReallyLongInt& y){
     return x.mult(y);
 }
 
-
 ReallyLongInt operator/(const ReallyLongInt& x, const ReallyLongInt& y){
     ReallyLongInt quotient;
     ReallyLongInt remainder;
@@ -321,4 +352,3 @@ ReallyLongInt operator%(const ReallyLongInt& x, const ReallyLongInt& y){
     x.div(y, quotient, remainder);
     return remainder;
 }
-
