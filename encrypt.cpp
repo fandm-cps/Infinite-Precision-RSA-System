@@ -40,7 +40,6 @@ int main(int argc, char** argv){
         unsigned long long tmp = (unsigned long long)c;
         ReallyLongInt x(tmp);
         ReallyLongInt y = (x.exp(e)) % n;
-        cout << c<< " "<< x.toString() << " " << e.toString() << " " << n.toString() << " " << y.toString() <<endl;
         outputFile << (y.toString()) << " ";
     }
     inputFile.close();

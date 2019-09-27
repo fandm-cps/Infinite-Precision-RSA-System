@@ -6,14 +6,10 @@
 #include <string>
 #include <vector>
 
-struct arrReallyLongInt{ 
-    ReallyLongInt arr[3]; 
-}; 
-
 
 class numberTheory{
     public:
-    arrReallyLongInt extendedEulid(ReallyLongInt a, ReallyLongInt b);
+    void extendedEulid(ReallyLongInt a, ReallyLongInt b, ReallyLongInt* d, ReallyLongInt* x, ReallyLongInt* y);
 };
 
 #endif

@@ -15,7 +15,7 @@ ReallyLongInt::ReallyLongInt(void){
 
 ReallyLongInt::ReallyLongInt(long long num){
     (isNeg = (num < 0)) ? num *= -1 : num;
-    int counter = 0;
+    long long counter = 0;
     
     for(long long power = 1; num >= power and counter != 62; counter++)
         power *= 2;
@@ -23,7 +23,7 @@ ReallyLongInt::ReallyLongInt(long long num){
     size = pow(2, ceil(log2((counter == 0 or counter == 62)? counter += 1 : counter)));
     
     digits = new vector<bool>(size, false);
-    for(int i = 0; i < size; i++){
+    for(long long i = 0; i < size; i++){
         num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
         num /= 2;
     }
@@ -33,7 +33,7 @@ ReallyLongInt::ReallyLongInt(long long num){
 ReallyLongInt::ReallyLongInt(const string &numStr){
     long long num = stoll(numStr);
     (isNeg = (num < 0)) ? num *= -1 : num;
-    int counter = 0;
+    long long counter = 0;
     
     for(long long power = 1; num >= power and counter != 62; counter++)
         power *= 2;
@@ -41,7 +41,7 @@ ReallyLongInt::ReallyLongInt(const string &numStr){
     size = pow(2, ceil(log2((counter == 0 or counter == 62)? counter += 1 : counter)));
     
     digits = new vector<bool>(size, false);
-    for(int i = 0; i < size; i++){
+    for(long long i = 0; i < size; i++){
         num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
         num /= 2;
     }
@@ -50,7 +50,7 @@ ReallyLongInt::ReallyLongInt(const string &numStr){
 
 ReallyLongInt::ReallyLongInt(const ReallyLongInt& other){
     digits = new vector<bool>(other.size, false);
-    for(int i = 0; i < other.size; i++)
+    for(long long i = 0; i < other.size; i++)
         (*digits)[i] = (*other.digits)[i];
     size = other.size;
     isNeg = other.isNeg;
@@ -64,10 +64,10 @@ ReallyLongInt::~ReallyLongInt(void)
 
 string ReallyLongInt::toString() const{
     long long ans = 0;
-    for(int i = 0; i < size; i++){
+    for(long long i = 0; i < size; i++){
         if((*digits)[i] == true){
             long long power = 1;
-            for(int j = 0; j < i; j ++)
+            for(long long j = 0; j < i; j ++)
                 power *= 2;
             ans += power;
         }
@@ -78,7 +78,7 @@ string ReallyLongInt::toString() const{
 
 string ReallyLongInt::toStringBinary() const{
     string str = "";
-    for(int i = size - 1; i >= 0; i--)
+    for(long long i = size - 1; i >= 0; i--)
         (*digits)[i] == true ? str += "1" : str += "0";
     return str;
 }
@@ -92,7 +92,7 @@ bool ReallyLongInt::absGreater(const ReallyLongInt &other)const{
         return true;
     else if (this->size < other.size)
         return false;
-    for(int i = this->size - 1; i >= 0 ; i--)
+    for(long long i = this->size - 1; i >= 0 ; i--)
         if((*digits)[i] == false and (*other.digits)[i] == true)
             return false;
         else if ((*digits)[i] == true and (*other.digits)[i] == false)
@@ -113,7 +113,7 @@ void ReallyLongInt::removeLeadingZeros(void){
         size--;
     }
     vector<bool>* tmp = new vector<bool>(size, false);
-    for(int i = 0; i < size; i++)
+    for(long long i = 0; i < size; i++)
         (*tmp)[i] = (*digits)[i];
     digits = tmp;
 }
@@ -131,10 +131,10 @@ void ReallyLongInt::swap(ReallyLongInt other){
 
 ReallyLongInt ReallyLongInt::absAdd(const ReallyLongInt& other) const{
     ReallyLongInt* result = new ReallyLongInt();
-    int tmp_size = other.size < this->size ? this->size + 1 : other.size + 1;
+    long long tmp_size = other.size < this->size ? this->size + 1 : other.size + 1;
     vector<bool>* tmp_vector = new vector<bool>(tmp_size, false);
     bool inc = false;
-    for(int i = 0; i < tmp_size; i++){
+    for(long long i = 0; i < tmp_size; i++){
         if(((*digits)[i] == 1 and (*other.digits)[i] == 1 and inc == 1) or
            ((*digits)[i] == 1 and (*other.digits)[i] == 0 and inc == 0) or
            ((*digits)[i] == 0 and (*other.digits)[i] == 1 and inc == 0) or
@@ -183,7 +183,7 @@ ReallyLongInt ReallyLongInt::absSub(const ReallyLongInt& other) const{
     result->size = other.size < this->size ? this->size: other.size;
     vector<bool>* tmp_vector = new vector<bool>(result->size, false);
     bool borrow = false;
-    for(int i = 0; i < result->size; i++){
+    for(long long i = 0; i < result->size; i++){
         if((smaller[i] == 1 and larger[i] == 1 and borrow == 1) or
            (smaller[i] == 1 and larger[i] == 0 and borrow == 0) or
            (smaller[i] == 0 and larger[i] == 1 and borrow == 0) or
@@ -235,12 +235,12 @@ ReallyLongInt ReallyLongInt::absMult(const ReallyLongInt &other) const{
     ReallyLongInt result;
     result.size = this->size * other.size;
     result.digits = new vector<bool>(result.size, false);
-    int car = 0;
-    for(int i = 0; i < other.size; i++){
+    long long car = 0;
+    for(long long i = 0; i < other.size; i++){
         car = 0;
-        for(int j = 0; j < this->size + 1; j++){
-            int tmp = ((*digits)[j] == 1 and (*other.digits)[i] == 1) ? 1 : 0;
-            int last_result = (*result.digits)[j + i];
+        for(long long j = 0; j < this->size + 1; j++){
+            long long tmp = ((*digits)[j] == 1 and (*other.digits)[i] == 1) ? 1 : 0;
+            long long last_result = (*result.digits)[j + i];
             (*result.digits)[j + i]  = ((tmp == 1 and car == 1 and last_result == 1)
                                         or (tmp == 1 and car == 0 and last_result == 0)
                                         or (tmp == 0 and car == 1 and last_result == 0)
@@ -268,9 +268,9 @@ void ReallyLongInt::absDiv(const ReallyLongInt& other, ReallyLongInt& quotient, 
     long long d = 0;
     ReallyLongInt other_copy(other);
     other.isNeg == 1 ? other_copy.isNeg = 0 : other_copy.isNeg = 0;
-    for(int i = 0; i < this->size; i++){
+    for(long long i = 0; i < this->size; i++){
         remainder = remainder * 2;
-        int tmp = (*this->digits)[this->size - i - 1];
+        long long tmp = (*this->digits)[this->size - i - 1];
         remainder = remainder + tmp;
         d = 0;
         while(remainder.greater(other_copy) or remainder.equal(other_copy)){

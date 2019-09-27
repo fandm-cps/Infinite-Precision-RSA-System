@@ -1,6 +1,6 @@
 #include "numberTheory.hpp"
 #include "ReallyLongInt.hpp"
-//#include "ReallyLongInt.cpp"
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -9,22 +9,21 @@
 
 using namespace std;
 
-arrReallyLongInt numberTheory::extendedEulid(ReallyLongInt a, ReallyLongInt b){
-    arrReallyLongInt result;
+void numberTheory::extendedEulid(ReallyLongInt a, ReallyLongInt b, ReallyLongInt* d, ReallyLongInt* x, ReallyLongInt* y){
     if(b.toString() == "0"){
-        ReallyLongInt x(1);
-        ReallyLongInt y;
-        result.arr[0] = a;
-        result.arr[1] = x;
-        result.arr[2] = y;
-        return result;
+        ReallyLongInt x_tmp(1);
+        ReallyLongInt y_tmp;
+        *d = a;
+        *x = x_tmp;
+        *y = y_tmp;
+        return;
     }
     else{
-        result = this->extendedEulid(b, a % b);
-        ReallyLongInt x_1 = result.arr[2];
-        ReallyLongInt y_1 = result.arr[1] - result.arr[2] * (a / b);
-        result.arr[1] = x_1;
-        result.arr[2] = y_1;
+        this->extendedEulid(b, a % b, d, x, y);
+        ReallyLongInt x_1 = *y;
+        ReallyLongInt y_1 = *x - *y * (a / b);
+        *x = x_1;
+        *y = y_1;
     }
-    return result;
+    return;
 }

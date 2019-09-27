@@ -1,6 +1,6 @@
 #include "ReallyLongInt.hpp"
-#include "ReallyLongInt.cpp"
 #include "numberTheory.hpp"
+#include "ReallyLongInt.cpp"
 #include "numberTheory.cpp"
 
 #include <fstream>
@@ -10,7 +10,7 @@
 #include <math.h>
 #include <cmath>
 
-
+#ifndef CATCH_CONFIG_MAIN
 using namespace std;
 
 int main(int argc, char** argv){
@@ -24,21 +24,22 @@ int main(int argc, char** argv){
     }
     ReallyLongInt n = p * q;
     ReallyLongInt t = (p - 1) * (q - 1);
+    
+    cout << n.toString() << " " << t.toString() <<endl;
 
-    ReallyLongInt e(2);
-
+    ReallyLongInt e(1);
     numberTheory nT;
+    ReallyLongInt* d = new ReallyLongInt();
+    ReallyLongInt* x = new ReallyLongInt();
+    ReallyLongInt* y = new ReallyLongInt();
 
-    ReallyLongInt d;
-    arrReallyLongInt gcd;
-    while(d.toString() != "1"){
-        gcd = nT.extendedEulid(e, t);
-        d = gcd.arr[0];
+    while(d->toString() != "1"){
         e = e + 1;
+        nT.extendedEulid(e, t, d, x, y);
     }
-    d = gcd.arr[1];
-    if(not d.greater(0))
-        d = -d;
+
+    if(not x->greater(0))
+        *x = (*x) + t;
 
     ofstream publicKey;
     publicKey.open(argv[3]);
@@ -47,8 +48,10 @@ int main(int argc, char** argv){
 
     ofstream privateKey;
     privateKey.open(argv[4]);
-    privateKey << d.toString() << " " << n.toString();
+    privateKey << x->toString() << " " << n.toString();
     privateKey.close();
 
     return 0; 
 } 
+
+#endif

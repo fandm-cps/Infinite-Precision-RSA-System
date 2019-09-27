@@ -20,6 +20,7 @@ int main(int argc, char** argv){
     ReallyLongInt n;
     if(privateKey.is_open()){
         string tmp = "";
+        
         while (privateKey.get(c) and c != ' ')
             tmp += c;
         d = ReallyLongInt(tmp);
@@ -36,10 +37,9 @@ int main(int argc, char** argv){
 
     ifstream inputFile(argv[2]);
     ofstream outputFile(argv[3]);
-    ReallyLongInt y;
     string tmp;
     inputFile >> tmp;
-    y = tmp;
+    ReallyLongInt y(tmp);
     while(!inputFile.eof()){
         long long tmp_x = stoll((y.exp(d) % n).toString());
         char x = (char)tmp_x;
