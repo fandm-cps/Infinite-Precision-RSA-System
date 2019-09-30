@@ -5,7 +5,7 @@ COVERAGE = --coverage
 
 all: main 
 
-test: catchdebug catchEuclid catchKeyGen
+test: catchdebug catchEuclid 
 
 coverage: coverage_R coverage_E
 
@@ -24,15 +24,8 @@ catchdebug: ReallyLongInt_TEST.cpp ReallyLongInt.o
 catchEuclid: numberTheory_TEST.cpp numberTheory.o ReallyLongInt.o
 	$(CC) $(CFLAGE) $(CATCHINC) -DCATCH_CONFIG_MAIN numberTheory_TEST.cpp numberTheory.o ReallyLongInt.o -o numberTheory_TEST
 
-catchKeyGen: keygen_TEST.cpp numberTheory.o ReallyLongInt.o keygen.o
-	$(CC) $(CFLAGE) $(CATCHINC) -DCATCH_CONFIG_MAIN keygen_TEST.cpp numberTheory.o keygen.o ReallyLongInt.o -o keygen_TEST
-
 coverage_R: ReallyLongInt_TEST.cpp ReallyLongInt.cpp
 	$(CC) $(CFLAGE) $(CATCHINC) $(COVERAGE) -DCATCH_CONFIG_MAIN ReallyLongInt_TEST.cpp ReallyLongInt.cpp -o ReallyLongInt_COVERAGE
 
 coverage_E: numberTheory_TEST.cpp numberTheory.o ReallyLongInt.o
 	$(CC) $(CFLAGE) $(CATCHINC) $(COVERAGE) -DCATCH_CONFIG_MAIN numberTheory_TEST.cpp numberTheory.cpp ReallyLongInt.o -o numberTheory_COVERAGE
-
-
-coverage_K: ReallyLongInt_TEST.cpp ReallyLongInt.cpp
-	$(CC) $(CFLAGE) $(CATCHINC) $(COVERAGE) -DCATCH_CONFIG_MAIN ReallyLongInt_TEST.cpp ReallyLongInt.cpp -o ReallyLongInt_COVERAGE
