@@ -25,7 +25,6 @@ private:
     ReallyLongInt expHelper(ReallyLongInt base, ReallyLongInt exp);
     bool parity();
     void swap(ReallyLongInt other);
-    
 public:
     
     ReallyLongInt();
