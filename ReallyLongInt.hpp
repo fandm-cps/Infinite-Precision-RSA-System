@@ -1,3 +1,4 @@
+
 #ifndef REALLYLONGINT_HPP
 #define REALLYLONGINT_HPP
 
@@ -24,7 +25,6 @@ private:
     ReallyLongInt expHelper(ReallyLongInt base, ReallyLongInt exp);
     bool parity();
     void swap(ReallyLongInt other);
-
 public:
     
     ReallyLongInt();
@@ -66,4 +66,3 @@ ReallyLongInt operator/(const ReallyLongInt& x, const ReallyLongInt& y);
 ReallyLongInt operator%(const ReallyLongInt& x, const ReallyLongInt& y);
 
 #endif
-

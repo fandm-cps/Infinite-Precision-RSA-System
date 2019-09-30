@@ -3,7 +3,7 @@ CFLAGS = -Wall
 DEBUG = -DDEBUG -g
 COVERAGE = --coverage 
 
-all: main 
+all: catchdebug 
 
 test: catchdebug catchEuclid 
 

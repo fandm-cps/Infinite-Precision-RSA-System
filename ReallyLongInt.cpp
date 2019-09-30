@@ -15,13 +15,14 @@ ReallyLongInt::ReallyLongInt(void){
 
 ReallyLongInt::ReallyLongInt(long long num){
     (isNeg = (num < 0)) ? num *= -1 : num;
+
     long long counter = 0;
     
     for(long long power = 1; num >= power and counter != 62; counter++)
         power *= 2;
     
     size = pow(2, ceil(log2((counter == 0 or counter == 62)? counter += 1 : counter)));
-    
+
     digits = new vector<bool>(size, false);
     for(long long i = 0; i < size; i++){
         num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
@@ -33,13 +34,14 @@ ReallyLongInt::ReallyLongInt(long long num){
 ReallyLongInt::ReallyLongInt(const string &numStr){
     long long num = stoll(numStr);
     (isNeg = (num < 0)) ? num *= -1 : num;
+
     long long counter = 0;
     
     for(long long power = 1; num >= power and counter != 62; counter++)
         power *= 2;
     
     size = pow(2, ceil(log2((counter == 0 or counter == 62)? counter += 1 : counter)));
-    
+
     digits = new vector<bool>(size, false);
     for(long long i = 0; i < size; i++){
         num % 2 != 0 ? (*digits)[i] = - true : (*digits)[i] = false;
@@ -105,6 +107,7 @@ bool ReallyLongInt::greater(const ReallyLongInt& other)const{
         return false;
     return (absGreater(other) and not isNeg) or (not absGreater(other) and other.isNeg);
 }
+
 
 void ReallyLongInt::removeLeadingZeros(void){
     while((*digits)[size - 1] == 0){
@@ -183,6 +186,7 @@ ReallyLongInt ReallyLongInt::absSub(const ReallyLongInt& other) const{
     result->size = other.size < this->size ? this->size: other.size;
     vector<bool>* tmp_vector = new vector<bool>(result->size, false);
     bool borrow = false;
+
     for(long long i = 0; i < result->size; i++){
         if((smaller[i] == 1 and larger[i] == 1 and borrow == 1) or
            (smaller[i] == 1 and larger[i] == 0 and borrow == 0) or
