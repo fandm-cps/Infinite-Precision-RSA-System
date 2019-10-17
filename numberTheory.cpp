@@ -10,7 +10,7 @@
 using namespace std;
 
 void numberTheory::extendedEulid(ReallyLongInt a, ReallyLongInt b, ReallyLongInt* d, ReallyLongInt* x, ReallyLongInt* y){
-    if(b.toString() == "0"){
+    if(b.equal(0)){
         ReallyLongInt x_tmp(1);
         ReallyLongInt y_tmp;
         *d = a;
