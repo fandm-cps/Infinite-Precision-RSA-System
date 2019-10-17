@@ -1,7 +1,7 @@
 # Infinite Precision RSA System 
 RSA (Rivest–Shamir–Adleman) is one of the first public-key cryptosystems and is widely used for secure data transmission. In this system, the encryption key is public, and the decryption key, however, is kept private. This asymmetry is based on the practical difficulty of the factorization of the product of two large prime numbers, the "factoring problem." The idea behind RSA is to make Diffie-Hellman, which relies only upon Fermat's Little Theorem and primes, into a system which involves Euler's Theorem. 
 
-In practice, the prime numbers are industrial-grade primes. This is the time when built-in simple data-types are just not enough. In this project, we will implement a very large unsigned long called ReallyLongInt of a size not supported by C++ (C++ supports up to 2^64). However, we are going to consider the RSA algorithm for public-key cryptography, and even 2^64 can be regarded as small.  
+In practice, the prime numbers are industrial-grade primes. This is the time when built-in simple data-types are just not enough. In this project, we will implement a very large unsigned long called ReallyLongInt of a size not supported by C++ (C++ supports up to 2^64). Therefore, we are going to consider the RSA algorithm for public-key cryptography, and even 2^64 can be regarded as small.
 
 ## Requirements
 macOS Catalina Version 10.15*
@@ -85,9 +85,10 @@ Different operating systems and architectures MAY have different decrypted messa
 
 I did not do a lot of boundary check or tried many exceptional cases. So, PLEASE DO NOT TRY STRANGE STUFF like putting a double in a ReallyLongInt or making a negative prime number.
 
-If you are from Franklin and Marshall College, PA and taking CPS 222 right now, DO NOT CONSULT OR EVEN COPY MY CODE. Professor Booth, Hu, and Novak are watching you.
+This repostory is project 1 for CPS222 2019Fall. Therefore, if you are a student at Franklin and Marshall College, PA, and are taking CPS 222 right now, DO NOT CONSULT OR EVEN COPY MY CODE. Professor Booth, Hu, and Novak are watching you.
 
 # Reference 
+
 https://en.wikipedia.org/wiki/RSA_(cryptosystem)
 
 Karl-Dieter Crisman,Number Theory: In Context and Interactive, January 2017
