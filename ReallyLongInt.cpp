@@ -179,7 +179,7 @@ ReallyLongInt ReallyLongInt::absSub(const ReallyLongInt& other) const{
     ReallyLongInt* result = new ReallyLongInt();
     vector<bool> larger = *digits;
     vector<bool> smaller = *other.digits;
-    if(not this->absGreater(other)){
+    if(other.absGreater(*this)){
         std::swap(larger, smaller);
         result->isNeg = true;
     }
@@ -323,7 +323,6 @@ bool ReallyLongInt::parity(){
 
 bool ReallyLongInt::isPrime(){
     ReallyLongInt counter(2);
-    ReallyLongInt a(0);
     if(this->isNeg or (this->size == 1 and (*this->digits)[0] == 0))
         return false;
     while(this->greater(counter)){
