@@ -4,9 +4,11 @@ RSA (Rivest–Shamir–Adleman) is one of the first public-key cryptosystems and
 In practice, the prime numbers are industrial-grade primes. This is the time when built-in simple data-types are just not enough. In this project, we will implement a very large unsigned long called ReallyLongInt of a size not supported by C++ (C++ supports up to 2^64). However, we are going to consider the RSA algorithm for public-key cryptography, and even 2^64 can be regarded as small.  
 
 ## Requirements
-macOS Catalina Version 10.15
+macOS Catalina Version 10.15*
 
 C++ 11
+
+*This version will guarantee you to have a correct decrypted message. 
 
 ## To Set Up Everything:
 ```
@@ -64,22 +66,24 @@ The decrypt.cpp takes three file names as command-line arguments: the path of th
 
 3. Let x = (y^d) % n, from the Private key set above
 
-4. Convert the number x into a character‘c’ and place into a new message
+4. Convert the number x into a character ‘c’ and place into a new message
 
-## Catch and Coverage
+## CatchDebug and Coverage
 ```
-$ make text
+$ make test
 $ make coverage
 ```
 Rest Please See Cheat Sheet
 
 ## Cautions
 
+Though I call it an infinite precision integer system, there is still a limit about 3000^3000. It is because my for loop can at most iterate 2^63 times. 
+
+Different operating systems and architectures MAY have different decrypted messages though the decrypted numbers are essentially correct.
+
+I did not do a lot of boundary check or tried many exceptional cases. So, PLEASE DO NOT TRY STRANGE STUFF like putting a double in a ReallyLongInt or making a negative prime number.
+
 If you are from Franklin and Marshall College, PA and taking CPS 222 right now, DO NOT CONSULT OR EVEN COPY MY CODE. Professor Booth, Hu, and Novak are watching you.
-
-Though I call it an infinite precision integer system, there is still a limit around 3000^3000. It is because both my for loop can at most iterate 2^63 - 1 time and some stack issue. 
-
-Different operating systems and architectures MAY have a different decrypted result though the decrypted numbers are essentially correct.
 
 # Reference 
 https://en.wikipedia.org/wiki/RSA_(cryptosystem)
