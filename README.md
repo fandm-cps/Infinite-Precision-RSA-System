@@ -44,13 +44,13 @@ $ ./encrypt.exe <publicfile> <sourcefile> <encryptedfile>
 ```
 The encrypt.cpp takes in three file names as command-line arguments: the path of the public key file, the path of the test file, and the destination of encryption. It uses the public key to encrypt the data in the source file. The procedure of the encryption is the following:
 
-1. Loop over charactersin message
+1. Loop over characters in message
 
 2. For each character ‘c’ get ASCII value x
 
-3. Let y = (x^e) % n, from thePublic key set above
+3. Let y = (x^e) % n, from the Public key set above
 
-4. Covert the number yback into a character‘c’ and place into the new message
+4. Covert the number y back into a character ‘c’ and place into the new message
 
 ## To Decrypt 
 ```
@@ -58,13 +58,13 @@ $ ./decrypt.exe <privatefile> <encryptedfile> <decryptedfile>
 ```
 The decrypt.cpp takes three file names as command-line arguments: the path of the private key file, the path of an encrypted file, and the destination of decryption. It uses the private key to decrypt the encrypted data in the encrypted file. The procedure of the decryption is the following:
 
-1. Loop over charatersin the encrypted message
+1. Loop over charaters in the encrypted message
 
 2. For each character ‘c’ get ASCII value y
 
 3. Let x = (y^d) % n, from the Private key set above
 
-4. Convert thenumber x into a character‘c’ and place into a new message
+4. Convert the number x into a character‘c’ and place into a new message
 
 ## Cautions
 
