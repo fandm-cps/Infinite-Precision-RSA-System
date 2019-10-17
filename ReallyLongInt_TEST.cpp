@@ -14,7 +14,7 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         
         INFO("Using default constructor")
         
-        REQUIRE(test_int_a->toString() == "0");
+        REQUIRE(test_int_a->equal(0));
       
         REQUIRE(test_int_a->toStringBinary() == "0");
 
@@ -26,21 +26,21 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         test_int_a = new ReallyLongInt(num);
         
         INFO("Sets To Be 0")
-        REQUIRE(test_int_a->toString() == "0");
+        REQUIRE(test_int_a->equal(0));
 
         REQUIRE(test_int_a->toStringBinary() == "0");
         
         test_int_a = new ReallyLongInt(9223372036854775807);
         
         INFO("Check Max")
-        REQUIRE(test_int_a->toString() == "9223372036854775807");
+        REQUIRE(test_int_a->equal(9223372036854775807));
         
         REQUIRE(test_int_a->toStringBinary() == "111111111111111111111111111111111111111111111111111111111111111");
         
         test_int_a = new ReallyLongInt(-9223372036854775807);
         
         INFO("Check Min")
-        REQUIRE(test_int_a->toString() == "-9223372036854775807");
+        REQUIRE(test_int_a->equal(-9223372036854775807));
         
         REQUIRE(test_int_a->toStringBinary() == "111111111111111111111111111111111111111111111111111111111111111");
         
@@ -53,7 +53,7 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         
         INFO("Sets To Be String 4611686018427387904")
         
-        REQUIRE(test_int_a->toString() == "4611686018427387904");
+        REQUIRE(test_int_a->equal(4611686018427387904));
         
         REQUIRE(test_int_a->toStringBinary() == "100000000000000000000000000000000000000000000000000000000000000");
         
@@ -152,67 +152,67 @@ TEST_CASE("TESTING ReallyLongInt Class"){
 
         ReallyLongInt test_int_g = test_int_e + test_int_f;
         INFO("g = e + f")
-        REQUIRE(test_int_g.toString() == "8");
+        REQUIRE(test_int_g.equal(8));
         test_int_e = ReallyLongInt(-5);
         test_int_f = ReallyLongInt(-8);
         test_int_g = test_int_e + test_int_f;
       
         INFO("g = e + f")
-        REQUIRE(test_int_g.toString() == "-13");
+        REQUIRE(test_int_g.equal(-13));
       
         ReallyLongInt a(8);
         ReallyLongInt b(-9);
         ReallyLongInt c = a + b;
-        REQUIRE(c.toString() == "-1");
+        REQUIRE(c.equal(-1));
 
         a = b;
         b = ReallyLongInt(8);
         c = a + b;
-        REQUIRE(c.toString() == "-1");
+        REQUIRE(c.equal(-1));
     }
   
     SECTION("Sub Test"){
         ReallyLongInt a(-5);
         ReallyLongInt b(-8);
         ReallyLongInt c = a - b;
-        REQUIRE(c.toString() == "3");
+        REQUIRE(c.equal(3));
 
         a = ReallyLongInt(3);
         b = ReallyLongInt(5);
         c = a - b;
-        REQUIRE(c.toString() == "-2");
+        REQUIRE(c.equal(-2));
 
         a = ReallyLongInt(8);
         b = ReallyLongInt(-9);
         c = a - b;
-        REQUIRE(c.toString() == "17");
+        REQUIRE(c.equal(17));
 
         a = b;
         b = ReallyLongInt(8);
         c = a - b;
-        REQUIRE(c.toString() == "-17");
+        REQUIRE(c.equal(-17));
     }
 
     SECTION("Multi Test"){
         ReallyLongInt a(-5);
         ReallyLongInt b(-8);
         ReallyLongInt c = a.mult(b);
-        REQUIRE(c.toString() == "40");
+        REQUIRE(c.equal(40));
 
         a = ReallyLongInt(3);
         b = ReallyLongInt(5);
         c = a.mult(b);
-        REQUIRE(c.toString() == "15");
+        REQUIRE(c.equal(15));
 
         a = ReallyLongInt(8);
         b = ReallyLongInt(-9);
         c = a.mult(b);
-        REQUIRE(c.toString() == "-72");
+        REQUIRE(c.equal(-72));
 
         a = b;
         b = ReallyLongInt(8);
         c = a * b;
-        REQUIRE(c.toString() == "-72");
+        REQUIRE(c.equal(-72));
     }
 
     SECTION("Division Test"){
@@ -221,44 +221,44 @@ TEST_CASE("TESTING ReallyLongInt Class"){
         ReallyLongInt q;
         ReallyLongInt r; 
         a.div(b, q, r);
-        REQUIRE(r.toString() ==  std::to_string(-5%(-8)));
-        REQUIRE(q.toString() ==  std::to_string(-5/(-8)));
+        REQUIRE(r.equal(-5%(-8)));
+        REQUIRE(q.equal(-5/(-8)));
 
         a = ReallyLongInt(3);
         b = ReallyLongInt(5);
         a.div(b, q, r);
-        REQUIRE(r.toString() ==  std::to_string(3%(5)));
-        REQUIRE(q.toString() ==  std::to_string(3/(5)));
+        REQUIRE(r.equal(3%5));
+        REQUIRE(q.equal(3/5));
 
         a = ReallyLongInt(-19);
         b = ReallyLongInt(3);
         a.div(b, q, r);
-        REQUIRE(r.toString() == std::to_string(-19%(3)));
-        REQUIRE(q.toString() == std::to_string(-19/(3)));
+        REQUIRE(r.equal(-19%(3)));
+        REQUIRE(q.equal(-19/(3)));
 
         a = ReallyLongInt(123);
         b = ReallyLongInt(-2);
-        REQUIRE((a%b).toString() == std::to_string(123%(-2)));
-        REQUIRE((a/b).toString() == std::to_string(123/(-2)));
+        REQUIRE((a%b).equal(123%(-2)));
+        REQUIRE((a/b).equal(123/(-2)));
 
         a = ReallyLongInt(123);
         b = ReallyLongInt(2);
-        REQUIRE((a%b).toString() == std::to_string(123%(2)));
-        REQUIRE((a/b).toString() == std::to_string(123/(2)));
+        REQUIRE((a%b).equal(123%2));
+        REQUIRE((a/b).equal(123/2));
     }
     
     SECTION("Negation"){
         ReallyLongInt a(3);
         a = -a;
-        REQUIRE(a.toString() == "-3");
+        REQUIRE(a.equal(-3));
     }
   
     SECTION("exp Test"){
         ReallyLongInt a(3);
         ReallyLongInt b(5);
 
-        REQUIRE(((a.exp(b)).toString()) == "243");
-        REQUIRE(((a.exp(0)).toString()) == "1");  
+        REQUIRE(((a.exp(b)).equal(243)));
+        REQUIRE(((a.exp(0)).equal(1)));
   
         a = ReallyLongInt(90);
         b = ReallyLongInt(4);
@@ -266,7 +266,7 @@ TEST_CASE("TESTING ReallyLongInt Class"){
     SECTION("Prime Test"){
         ReallyLongInt a(5);
         ReallyLongInt b(0);
-        ReallyLongInt c(6);
+        ReallyLongInt c(12);
         REQUIRE(a.isPrime());
         REQUIRE_FALSE(b.isPrime());
         REQUIRE_FALSE(c.isPrime());

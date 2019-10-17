@@ -306,9 +306,9 @@ ReallyLongInt ReallyLongInt::exp(const ReallyLongInt e){
 }
 
 ReallyLongInt ReallyLongInt::expHelper(ReallyLongInt base, ReallyLongInt exp){
-    if(exp.toString() == "0")
+    if(exp.equal(0))
         return 1;
-    if(exp.toString() == "1")
+    if(exp.equal(1))
         return base;
     else if(exp.parity() == 0)
         return expHelper(base * base, exp/2);
@@ -323,10 +323,11 @@ bool ReallyLongInt::parity(){
 
 bool ReallyLongInt::isPrime(){
     ReallyLongInt counter(2);
+    ReallyLongInt a(0);
     if(this->isNeg or (this->size == 1 and (*this->digits)[0] == 0))
         return false;
     while(this->greater(counter)){
-        if((*this % counter).toString() == "0")
+        if((((*this % counter).size == 1) and ((*(*this % counter).digits)[0] == 0)))
             return false;
         counter = counter + 1;
     }
@@ -358,4 +359,3 @@ ReallyLongInt operator%(const ReallyLongInt& x, const ReallyLongInt& y){
     x.div(y, quotient, remainder);
     return remainder;
 }
-
