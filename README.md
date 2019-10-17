@@ -6,6 +6,8 @@ In practice, the prime numbers are industrial-grade primes. This is the time whe
 ## Requirements
 macOS Catalina Version 10.15*
 
+or Ubuntu 16.04
+
 C++ 11
 
 *This version will guarantee you to have a correct decrypted message. 
