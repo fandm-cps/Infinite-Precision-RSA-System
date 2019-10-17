@@ -1,11 +1,10 @@
-# Unlimited Precision RSA System 
+# Infinite Precision RSA System 
 RSA (Rivest–Shamir–Adleman) is one of the first public-key cryptosystems and is widely used for secure data transmission. In this system, the encryption key is public, and the decryption key, however, is kept private. This asymmetry is based on the practical difficulty of the factorization of the product of two large prime numbers, the "factoring problem." The idea behind RSA is to make Diffie-Hellman, which relies only upon Fermat's Little Theorem and primes, into a system which involves Euler's Theorem. 
 
 In practice, the prime numbers are industrial-grade primes. This is the time when built-in simple data-types are just not enough. In this project, we will implement a very large unsigned long called ReallyLongInt of a size not supported by C++ (C++ supports up to 2^64). However, we are going to consider the RSA algorithm for public-key cryptography, and even 2^64 can be regarded as small.  
 
-NOTE: Though I call it an infinite precision integer system, there is still a limit around 3000^3000. It is because both my for loop can at most iterate 2^63 - 1 time and some stack issue. 
-
 ## Requirements
+macOS Catalina Version 10.15
 C++ 11
 
 ## To Set Up Everything:
@@ -66,6 +65,11 @@ The decrypt.cpp takes three file names as command-line arguments: the path of th
 
 4. Convert thenumber x into a character‘c’ and place into a new message
 
+## Cautions
+
+Though I call it an infinite precision integer system, there is still a limit around 3000^3000. It is because both my for loop can at most iterate 2^63 - 1 time and some stack issue. 
+
+Different operating systems and architectures MAY have a different decrypted result though the decrypted numbers are essentially correct.
 
 # Reference 
 https://en.wikipedia.org/wiki/RSA_(cryptosystem)
