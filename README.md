@@ -15,7 +15,7 @@ $ make all
 
 ## To Generate Public/Private Key 
 ```
-$ ./keygen.exe <numberone> <numbertwo> <publicfile> <privatefile>
+$ ./keygen.exe <primeone> <primetwo> <publicfile> <privatefile>
 ```
 The keygen.cpp takes in two prime numbers and two text files as command-line arguments. If two input numbers are not prime, the program will throw an error message. The procedure is the following:
 
@@ -40,7 +40,7 @@ NOTE: If the product of two prime numbers is smaller than 255, the system will f
 
 ## To Encrypt 
 ```
-$ ./encrypt.exe <publicfile> <sourcefile> <encryptedfile>
+$ ./encrypt.exe <publicKeyfile> <sourcefile> <encryptedfile>
 ```
 The encrypt.cpp takes in three file names as command-line arguments: the path of the public key file, the path of the test file, and the destination of encryption. It uses the public key to encrypt the data in the source file. The procedure of the encryption is the following:
 
@@ -54,7 +54,7 @@ The encrypt.cpp takes in three file names as command-line arguments: the path of
 
 ## To Decrypt 
 ```
-$ ./decrypt.exe <privatefile> <encryptedfile> <decryptedfile>
+$ ./decrypt.exe <privateKeyfile> <encryptedfile> <decryptedfile>
 ```
 The decrypt.cpp takes three file names as command-line arguments: the path of the private key file, the path of an encrypted file, and the destination of decryption. It uses the private key to decrypt the encrypted data in the encrypted file. The procedure of the decryption is the following:
 
