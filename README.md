@@ -85,7 +85,7 @@ Different operating systems and architectures MAY have different decrypted messa
 
 I did not do a lot of boundary check or tried many exceptional cases. So, PLEASE DO NOT TRY STRANGE STUFF like putting a double in a ReallyLongInt or making a negative prime number.
 
-This repostory is project 1 for CPS222 2019Fall. Therefore, if you are a student at Franklin and Marshall College, PA, and are taking CPS 222 right now, DO NOT CONSULT OR EVEN COPY MY CODE. Professor Booth, Hu, and Novak are watching you.
+This repostory is project 1 for CPS222 2019Fall. Therefore, if you are a student at Franklin and Marshall College, PA, and are taking CPS 222 right now, DO NOT OPEN OR EVEN COPY MY CODE. Professor Booth, Hu, and Novak are watching you.
 
 # Reference 
 
