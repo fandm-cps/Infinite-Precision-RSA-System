@@ -52,7 +52,7 @@ The encrypt.cpp takes in three file names as command-line arguments: the path of
 
 4. Covert the number yback into a character‘c’ and place into the new message
 
-## Te Decrypt 
+## To Decrypt 
 ```
 $ ./decrypt.exe <privatefile> <encryptedfile> <decryptedfile>
 ```
