@@ -68,7 +68,7 @@ The decrypt.cpp takes three file names as command-line arguments: the path of th
 
 ## Cautions
 
-If you are from Franklin and Marshall College, PA and taking CPS 222 right now, DO NOT CONSULT OR EVEN COPY MY CODE. Professor Booth, Hu, and Novak have their eyes on you.
+If you are from Franklin and Marshall College, PA and taking CPS 222 right now, DO NOT CONSULT OR EVEN COPY MY CODE. Professor Booth, Hu, and Novak are watching you.
 
 Though I call it an infinite precision integer system, there is still a limit around 3000^3000. It is because both my for loop can at most iterate 2^63 - 1 time and some stack issue. 
 
