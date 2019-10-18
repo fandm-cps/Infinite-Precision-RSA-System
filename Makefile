@@ -25,7 +25,7 @@ decrypt.o: decrypt.cpp
 	$(CC) -c decrypt.cpp
 
 keyGeneator: keygen.cpp
-	$(CC) -o kengen.exe keygen.cpp
+	$(CC) -o keygen.exe keygen.cpp
 
 encryption: encrypt.cpp
 	$(CC) -o encrypt.exe encrypt.cpp
